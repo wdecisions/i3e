@@ -1,4 +1,4 @@
-# i3e
+# I3E
 Index of Economic Uncertainty 
 
 International Center for Decision Making (ICDM)
