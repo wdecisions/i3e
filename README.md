@@ -1,5 +1,5 @@
 # i3e
-Index of Economic Uncertainty \\
+Index of Economic Uncertainty 
 
 International Center for Decision Making (ICDM)
 
