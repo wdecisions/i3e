@@ -7,5 +7,7 @@ Prof. Miguel A. Ariño
 
 Prof. Roberto Garcia-Castro 
 
+IESE Business School 
+
 http://wdecisions.github.io/i3e/
 
