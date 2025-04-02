@@ -1,1 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IESE I3E Index of Economic Uncertainty</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 2rem;
+            background: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #FF3B30; /* Apple-style red */
+            font-weight: 600;
+        }
+        h2 {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #444;
+            font-weight: 400;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .card {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>IESE I3E Index of Economic Uncertainty</h1>
+    <h2>International Center For Decision Making (ICDM)</h2>
+
+    <div class="grid">
+        <div class="card"><img src="plots/australia.png" alt="Plot 1"></div>
+        <div class="card"><img src="plots/austria.png" alt="Plot 2"></div>
+        <div class="card"><img src="plots/belgium.png" alt="Plot 3"></div>
+        <div class="card"><img src="plots/brazil.png" alt="Plot 4"></div>
+        <div class="card"><img src="plots/canada.png" alt="Plot 5"></div>
+        <div class="card"><img src="plots/china.png" alt="Plot 6"></div>
+        <div class="card"><img src="plots/egypt.png" alt="Plot 7"></div>
+        <div class="card"><img src="plots/france.png" alt="Plot 8"></div>
+        <div class="card"><img src="plots/germany.png" alt="Plot 9"></div>
+        <div class="card"><img src="plots/greece.png" alt="Plot 10"></div>  
+        <div class="card"><img src="plots/israel.png" alt="Plot 11"></div>
+        <div class="card"><img src="plots/italy.png" alt="Plot 12"></div>
+        <div class="card"><img src="plots/japan.png" alt="Plot 13"></div>
+        <div class="card"><img src="plots/mexico.png" alt="Plot 14"></div>
+        <div class="card"><img src="plots/netherlands.png" alt="Plot 15"></div>
+        <div class="card"><img src="plots/poland.png" alt="Plot 16"></div>
+        <div class="card"><img src="plots/south_africa.png" alt="Plot 17"></div>
+        <div class="card"><img src="plots/south_korea.png" alt="Plot 18"></div>  
+        <div class="card"><img src="plots/spain.png" alt="Plot 19"></div>
+        <div class="card"><img src="plots/turkey.png" alt="Plot 20"></div>
+        <div class="card"><img src="plots/uk.png" alt="Plot 21"></div>
+        <div class="card"><img src="plots/usa.png" alt="Plot 22"></div>     
+        <!-- ... -->
+    </div>
+</body>
+</html>
 
