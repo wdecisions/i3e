@@ -14,7 +14,7 @@
 
     .sidebar {
       width: 200px;
-      flex-shrink: 0; /* Prevents the sidebar from shrinking */
+      flex-shrink: 0; /* Keeps the sidebar width fixed */
       background-color: #f4f4f4;
       padding: 10px;
       height: 100vh;
@@ -25,14 +25,16 @@
     .sidebar h2 {
       font-size: 16px;
       margin-top: 0;
+      margin-bottom: 8px;
     }
 
     .sidebar a {
       display: block;
-      padding: 6px 10px;
+      padding: 4px 8px; /* Reduced padding for a more compact look */
       color: #333;
       text-decoration: none;
-      margin-bottom: 4px;
+      margin-bottom: 2px; /* Reduced margin between links */
+      font-size: 14px; /* Optionally, reduce font size for a more compact list */
     }
 
     .sidebar a:hover {
@@ -151,10 +153,12 @@
       <h1>What is the I3E?</h1>
       <p>The IESE Economic Uncertainty Index (I3E) is a daily indicator measuring economic uncertainty in some of the largest world economies.</p>
       <p>To construct this index, we use the daily variation rates of the following economic and financial variables in each of the covered countries:</p>
-      <p>Domestic Equity Index</p>
-      <p>Domestic 10-year government bond prices </p>
-      <p>Domestic exchange rate </p>
-      <p>International Brent crude oil prices </p>
+      <ul>
+      <li>Domestic Equity Index</li>
+      <li>Domestic 10-year government bond prices </li>
+      <li>Domestic exchange rate </li>
+      <li>International Brent crude oil prices </li>
+      <ul>
       <p>The index reflects the magnitude of the daily growth rate fluctuations of these four variables. It is adjusted so that its average value is 100. </p>  
       <p>Index values below 100 indicate lower economic uncertainty compared to the average of the previous decade, while values above 100 indicate higher economic uncertainty. </p>
     </div>
