@@ -101,8 +101,6 @@
   </style>
 </head>
 <body>
-  
-
   <div class="sidebar">
     <h2>Countries</h2>
     <a href="plots/world.png">World</a>
@@ -147,12 +145,37 @@
       <a href="#">Contact</a>
     </div>
 
-    <div class="content">
+    <!-- Add an id to the content container so we can update it dynamically -->
+    <div class="content" id="content">
       <h1>Welcome</h1>
       <p>This page replicates the basic design of the Policy Uncertainty website with a custom red theme (#FF3B30) instead of green.</p>
       <p>Feel free to customize content, add charts, or embed data visualizations as needed.</p>
     </div>
   </div>
 
+  <script>
+    // Attach click event listeners to the nav links
+    document.querySelectorAll('.nav a').forEach(function(link) {
+      link.addEventListener('click', function(event) {
+        event.preventDefault();
+        var contentDiv = document.getElementById('content');
+        var linkText = this.textContent.trim();
+
+        if (linkText === 'Home') {
+          contentDiv.innerHTML = "<p>Welcome</p><p>Hello</p><p>Index</p>";
+        } else if (linkText === 'Global Indices') {
+          contentDiv.innerHTML = "<h2>I3E Global Index</h2>" +
+                                "<img src='plots/usa.png' alt='I3E Global Index Plot' style='max-width: 100%; height: auto; margin-top: 10px;' />";
+        } else if (linkText === 'Research') {
+          contentDiv.innerHTML = "<p>the construction of the index.</p>";
+        } else if (linkText === 'Contact') {
+          contentDiv.innerHTML = "<p>Ariño</p>";
+        } else {
+          // For 'Data' or any other link, you could clear or set different content
+          contentDiv.innerHTML = "";
+        }
+      });
+    });
+  </script>
 </body>
 </html>
