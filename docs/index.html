@@ -14,6 +14,7 @@
 
     .sidebar {
       width: 200px;
+      flex-shrink: 0; /* Prevents the sidebar from shrinking */
       background-color: #f4f4f4;
       padding: 10px;
       height: 100vh;
@@ -145,7 +146,7 @@
       <a href="#">Contact</a>
     </div>
 
-    <!-- Add an id to the content container so we can update it dynamically -->
+    <!-- The original main page view is stored here -->
     <div class="content" id="content">
       <h1>What is the I3E?</h1>
       <p>The IESE Economic Uncertainty Index (I3E) is a daily indicator measuring economic uncertainty in some of the largest world economies.</p>
@@ -160,7 +161,10 @@
   </div>
 
   <script>
-    // Attach click event listeners to the nav links
+    // Store the original content so that Home returns to it.
+    var initialContent = document.getElementById('content').innerHTML;
+
+    // Attach click event listeners to the nav links.
     document.querySelectorAll('.nav a').forEach(function(link) {
       link.addEventListener('click', function(event) {
         event.preventDefault();
@@ -168,18 +172,19 @@
         var linkText = this.textContent.trim();
 
         if (linkText === 'Home') {
-          contentDiv.innerHTML = "<p>Welcome</p><p>Hello</p><p>Index</p>";
+          // Reset to the original main page view.
+          contentDiv.innerHTML = initialContent;
         } else if (linkText === 'Global Indices') {
           contentDiv.innerHTML = "<h2>I3E Global Uncertainty Index</h2>" +
                                 "<img src='plots/usa.png' alt='I3E Global Index Plot' style='max-width: 100%; height: auto; margin-top: 10px;' />" +
-                                 "<h2>I3E Euro Uncertainty Index</h2>" +
-                                 "<img src='plots/germany.png' alt='I3E Euro Index Plot' style='max-width: 100%; height: auto; margin-top: 10px;' />" ;
+                                "<h2>I3E Euro Uncertainty Index</h2>" +
+                                "<img src='plots/germany.png' alt='I3E Euro Index Plot' style='max-width: 100%; height: auto; margin-top: 10px;' />";
         } else if (linkText === 'Research') {
           contentDiv.innerHTML = "<p>the construction of the index.</p>";
         } else if (linkText === 'Contact') {
           contentDiv.innerHTML = "<p>Ariño</p>";
         } else {
-          // For 'Data' or any other link, you could clear or set different content
+          // For 'Data' or any other link, adjust content as needed.
           contentDiv.innerHTML = "";
         }
       });
