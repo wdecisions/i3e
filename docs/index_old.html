@@ -1,73 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>IESE I3E Index of Economic Uncertainty</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            margin: 0;
-            padding: 2rem;
-            background: #f9f9f9;
-        }
-        h1 {
-            text-align: center;
-            color: #FF3B30; /* Apple-style red */
-            font-weight: 600;
-        }
-        h2 {
-            text-align: center;
-            font-size: 1.1rem;
-            color: #444;
-            font-weight: 400;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        .card {
-            background: white;
-            padding: 1rem;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.05);
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>I3E Economic Uncertainty Index</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background-color: #ffffff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 200px;
+      background-color: #f4f4f4;
+      padding: 10px;
+      height: 100vh;
+      overflow-y: auto;
+      border-right: 1px solid #ddd;
+    }
+
+    .sidebar h2 {
+      font-size: 16px;
+      margin-top: 0;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 6px 10px;
+      color: #333;
+      text-decoration: none;
+      margin-bottom: 4px;
+    }
+
+    .sidebar a:hover {
+      background-color: #FF3B30;
+      color: white;
+    }
+
+    .main {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      background-color: #FF3B30;
+      color: white;
+      padding: 10px 20px;
+      font-size: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header .title {
+      font-weight: bold;
+    }
+
+    .header .subtitle {
+      text-align: right;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .nav {
+      background-color: #FF3B30;
+      overflow: hidden;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav a {
+      float: left;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .nav a:hover {
+      background-color: #e12f27;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333333;
+    }
+
+    p {
+      line-height: 1.6;
+      color: #444;
+    }
+  </style>
 </head>
 <body>
-    <h1>IESE I3E Index of Economic Uncertainty</h1>
-    <h2>International Center For Decision Making (ICDM)</h2>
+  
 
-    <div class="grid">
-        <div class="card"><img src="plots/australia.png" alt="Plot 1"></div>
-        <div class="card"><img src="plots/austria.png" alt="Plot 2"></div>
-        <div class="card"><img src="plots/belgium.png" alt="Plot 3"></div>
-        <div class="card"><img src="plots/brazil.png" alt="Plot 4"></div>
-        <div class="card"><img src="plots/canada.png" alt="Plot 5"></div>
-        <div class="card"><img src="plots/china.png" alt="Plot 6"></div>
-        <div class="card"><img src="plots/egypt.png" alt="Plot 7"></div>
-        <div class="card"><img src="plots/france.png" alt="Plot 8"></div>
-        <div class="card"><img src="plots/germany.png" alt="Plot 9"></div>
-        <div class="card"><img src="plots/greece.png" alt="Plot 10"></div>  
-        <div class="card"><img src="plots/israel.png" alt="Plot 11"></div>
-        <div class="card"><img src="plots/italy.png" alt="Plot 12"></div>
-        <div class="card"><img src="plots/japan.png" alt="Plot 13"></div>
-        <div class="card"><img src="plots/mexico.png" alt="Plot 14"></div>
-        <div class="card"><img src="plots/netherlands.png" alt="Plot 15"></div>
-        <div class="card"><img src="plots/poland.png" alt="Plot 16"></div>
-        <div class="card"><img src="plots/south_africa.png" alt="Plot 17"></div>
-        <div class="card"><img src="plots/south_korea.png" alt="Plot 18"></div>  
-        <div class="card"><img src="plots/spain.png" alt="Plot 19"></div>
-        <div class="card"><img src="plots/turkey.png" alt="Plot 20"></div>
-        <div class="card"><img src="plots/uk.png" alt="Plot 21"></div>
-        <div class="card"><img src="plots/usa.png" alt="Plot 22"></div>     
-        <!-- ... -->
+  <div class="sidebar">
+    <h2>Countries</h2>
+    <a href="plots/world.png">World</a>
+    <a href="plots/australia.png">Australia</a>
+    <a href="plots/austria.png">Austria</a>
+    <a href="plots/belgium.png">Belgium</a>
+    <a href="plots/brazil.png">Brazil</a>
+    <a href="plots/canada.png">Canada</a>
+    <a href="plots/china.png">China</a>
+    <a href="plots/egypt.png">Egypt</a>
+    <a href="plots/france.png">France</a>
+    <a href="plots/germany.png">Germany</a>
+    <a href="plots/greece.png">Greece</a>
+    <a href="plots/israel.png">Israel</a>
+    <a href="plots/italy.png">Italy</a>
+    <a href="plots/japan.png">Japan</a>
+    <a href="plots/mexico.png">Mexico</a>
+    <a href="plots/netherlands.png">Netherlands</a>
+    <a href="plots/poland.png">Poland</a>
+    <a href="plots/south_africa.png">South Africa</a>
+    <a href="plots/south_korea.png">South Korea</a>
+    <a href="plots/spain.png">Spain</a>
+    <a href="plots/turkey.png">Turkey</a>
+    <a href="plots/uk.png">United Kingdom</a>
+    <a href="plots/usa.png">United States</a>
+  </div>
+
+  <div class="main">
+    <div class="header">
+      <div class="title">I3E Economic Uncertainty Index</div>
+      <div class="subtitle">
+        International Center for Decision Making (ICDM)<br>
+        IESE Business School
+      </div>
     </div>
+
+    <div class="nav">
+      <a href="#">Home</a>
+      <a href="#">Global Indices</a>
+      <a href="#">Research</a>
+      <a href="#">Data</a>
+      <a href="#">Contact</a>
+    </div>
+
+    <div class="content">
+      <h1>Welcome</h1>
+      <p>This page replicates the basic design of the Policy Uncertainty website with a custom red theme (#FF3B30) instead of green.</p>
+      <p>Feel free to customize content, add charts, or embed data visualizations as needed.</p>
+    </div>
+  </div>
+
 </body>
 </html>
-
