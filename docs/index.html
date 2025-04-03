@@ -183,15 +183,22 @@
         if (linkText === 'Home') {
           // Reset to the original main page view.
           contentDiv.innerHTML = initialContent;
+          
         } else if (linkText === 'Global Indices') {
           contentDiv.innerHTML = "<h2>I3E Global Uncertainty Index</h2>" +
                                 "<img src='plots/usa.png' alt='I3E Global Index Plot' style='max-width: 100%; height: auto; margin-top: 10px;' />" +
                                 "<h2>I3E Euro Uncertainty Index</h2>" +
                                 "<img src='plots/germany.png' alt='I3E Euro Index Plot' style='max-width: 100%; height: auto; margin-top: 10px;' />";
+          
+        } else if (linkText === 'Data') {
+          contentDiv.innerHTML = "<p>Download I3E data (txt) - Updated daily. <p><a href="i3e.txt" target="_blank">I3E Technical Note (PDF)</a></p> </p>"; 
+          
         } else if (linkText === 'Research') {
           contentDiv.innerHTML = "<p>the construction of the index.</p>";
+          
         } else if (linkText === 'Contact') {
           contentDiv.innerHTML = "<p> Miguel Angel Ariño <br> Roberto Garcia-Castro <br> International Center for Decision Making <br> IESE Business School</p>";
+          
         } else {
           // For 'Data' or any other link, adjust content as needed.
           contentDiv.innerHTML = "";
