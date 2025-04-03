@@ -169,7 +169,9 @@
     </div>
   </div>
 
-  <script>
+  <script>    
+    // Define a global variable for the current date (formatted as locale-specific)
+    var time = new Date().toLocaleDateString();    
     // Store the original content so that Home returns to it.
     var initialContent = document.getElementById('content').innerHTML;
 
@@ -191,7 +193,7 @@
                                 "<img src='plots/germany.png' alt='I3E Euro Index Plot' style='max-width: 100%; height: auto; margin-top: 10px;' />";
           
         } else if (linkText === 'Data') {
-          contentDiv.innerHTML = "<p>Download I3E global data (txt)  - updated daily. <a href='i3e_global.txt' target='_blank'>DATA</a></p>" +
+          contentDiv.innerHTML = "<p>Download I3E global data (txt)  - updated daily (" + time + "). <a href='i3e_global.txt' target='_blank'>DATA</a></p>" +
                                  "<p>Download I3E country data (txt) - updated daily. <a href='i3e_countries.txt' target='_blank'>DATA</a></p>"; 
           
         } else if (linkText === 'Research') {
