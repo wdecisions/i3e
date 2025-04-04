@@ -12,7 +12,7 @@
       display: flex;
     }
     .sidebar {
-      width: 160px;
+      width: 120px; /* Reduced width from 160px to 120px */
       flex-shrink: 0;
       background-color: #f4f4f4;
       padding: 10px;
@@ -40,7 +40,8 @@
     .main {
       flex-grow: 1;
       max-width: 1000px;
-      margin: 20px 20px 20px 0;
+      /* Removed top margin so header starts at the top */
+      margin: 0 20px 20px 0;
       padding: 20px;
     }
     /* Header split into two rows */
@@ -75,8 +76,9 @@
       line-height: 16px;
     }
     .business {
-      font-size: 12px;
-      line-height: 14px;
+      /* Increased font size and line height for better readability */
+      font-size: 16px;
+      line-height: 20px;
     }
     /* Content and table layout */
     .content-wrapper {
