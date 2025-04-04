@@ -203,12 +203,9 @@
           `;
         } else if (linkText === 'Data') {
           contentDiv.innerHTML = `
-            <p>Download I3E global data (txt)  - updated daily (${time}). 
-              <a href="i3e_global.txt" target="_blank">DATA</a>
-            </p>
-            <p>Download I3E country data (txt) - updated daily (${time}). 
-              <a href="i3e_countries.txt" target="_blank">DATA</a>
-            </p>
+            <p><a href="i3e_global.txt" target="_blank">DATA</a> - Download I3E global data (txt). Updated daily (${time}).</p>
+            <p><a href="i3e_countries.txt" target="_blank">DATA</a> - Download I3E country data (txt). Updated daily (${time}).</p>              
+          </p>
           `;
         } else if (linkText === 'Research') {
           contentDiv.innerHTML = `
