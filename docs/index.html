@@ -179,7 +179,9 @@
 
   <script>
     // Define a global variable for the current date (formatted as locale-specific)
-    var time = new Date().toLocaleDateString();
+    var d = new Date();
+    d.setDate(d.getDate() - 1);
+    var time = d.toLocaleDateString();
     // Store the original content so that Home returns to it.
     var initialContent = document.getElementById('content').innerHTML;
 
