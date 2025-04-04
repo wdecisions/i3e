@@ -13,7 +13,7 @@
     }
     .sidebar {
       width: 160px;
-      flex-shrink: 0; /* Keeps the sidebar width fixed */
+      flex-shrink: 0;
       background-color: #f4f4f4;
       padding: 10px;
       height: 100vh;
@@ -40,50 +40,50 @@
     .main {
       flex-grow: 1;
       max-width: 1000px;
-      margin: 20px 20px 20px 0; /* Reduced left margin so content sits closer to the sidebar */
+      margin: 20px 20px 20px 0;
       padding: 20px;
     }
+    /* Header split into two rows */
     .header {
       background-color: #FF3B30;
       color: white;
       padding: 10px 20px;
-      font-size: 20px;
+    }
+    .header-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .header .title {
+    .header-top .title,
+    .header-top .icdm {
+      font-size: 20px;
       font-weight: bold;
     }
-    .header .subtitle {
-      text-align: right;
-      font-size: 18px;
-      line-height: 1.2;
-    }
-    .nav {
-      background-color: #FF3B30;
-      overflow: hidden;
-      padding: 0;
-      margin: 0;
+    .header-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
     }
     .nav a {
-      float: left;
-      display: block;
+      display: inline-block;
       color: white;
       text-align: center;
-      padding: 8px 12px;  /* Reduced padding to make the nav thinner */
       text-decoration: none;
-      font-weight: bold;
+      margin-right: 10px;
+      font-size: 12px;
+      line-height: 14px;
     }
-    .nav a:hover {
-      background-color: #e12f27;
+    .business {
+      font-size: 12px;
+      line-height: 14px;
     }
-    /* New wrapper for side-by-side layout */
+    /* Content and table layout */
     .content-wrapper {
       display: flex;
       flex-direction: row;
       align-items: flex-start;
-      gap: 40px; /* Increased gap between main content and table */
+      gap: 40px;
       margin-top: 20px;
     }
     .content {
@@ -91,15 +91,14 @@
       text-align: justify;
     }
     #table-container {
-      width: 200px; /* Reduced table container width */
+      width: 200px;
     }
-    /* Modern table styling */
+    /* Table styling */
     #table-container table {
       width: 100%;
       border-collapse: collapse;
       font-family: Arial, sans-serif;
       margin-bottom: 20px;
-      font-size: 10px; 
     }
     #table-container th,
     #table-container td {
@@ -155,22 +154,23 @@
 
   <div class="main">
     <div class="header">
-      <div class="title">I3E Economic Uncertainty Index</div>
-      <div class="subtitle">
-        International Center for Decision Making (ICDM)<br><br>
-        IESE Business School
+      <div class="header-top">
+        <div class="title">I3E Economic Uncertainty Index</div>
+        <div class="icdm">International Center for Decision Making (ICDM)</div>
+      </div>
+      <div class="header-bottom">
+        <div class="nav">
+          <a href="#">Home</a>
+          <a href="#">Global Indices</a>
+          <a href="#">Data</a>
+          <a href="#">Research</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="business">IESE Business School</div>
       </div>
     </div>
     
-    <div class="nav">
-      <a href="#">Home</a>
-      <a href="#">Global Indices</a>
-      <a href="#">Data</a>
-      <a href="#">Research</a>
-      <a href="#">Contact</a>
-    </div>
-    
-    <!-- Content and table container wrapped side by side -->
+    <!-- Content and table container side by side -->
     <div class="content-wrapper">
       <div class="content" id="content">
         <h1>What is the I3E?</h1>
@@ -214,7 +214,7 @@
         var contentDiv = document.getElementById('content');
         var tableDiv = document.getElementById('table-container');
         var linkText = this.textContent.trim();
-
+  
         if (linkText === 'Home') {
           // Reset to the original Home view.
           contentDiv.innerHTML = initialContent;
