@@ -39,8 +39,6 @@
     }
     .main {
       flex-grow: 1;
-      display: flex;
-      flex-direction: column;
       max-width: 1000px;
       margin: 0 auto;
       padding: 20px;
@@ -80,13 +78,20 @@
     .nav a:hover {
       background-color: #e12f27;
     }
+    /* New wrapper for side-by-side layout */
+    .content-wrapper {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 20px;
+      margin-top: 20px;
+    }
     .content {
-      padding: 20px;
+      flex: 1;
       text-align: justify;
     }
     #table-container {
       width: 300px;
-      margin-top: 20px;
     }
     /* Modern table styling */
     #table-container table {
@@ -164,27 +169,30 @@
       <a href="#">Contact</a>
     </div>
     
-    <div class="content" id="content">
-      <h1>What is the I3E?</h1>
-      <p>The IESE Economic Uncertainty Index (I3E) is a daily indicator measuring economic uncertainty in the largest world economies.
-         The index is computed using the daily variation rates of four variables in each country:</p>
-      <ul>
-        <li>Domestic Equity Index</li>
-        <li>Domestic 10-year government bond prices</li>
-        <li>Domestic exchange rate</li>
-        <li>International Brent crude oil prices</li>
-      </ul>
-      <p>The index is adjusted so that its average value is 100. Although it can vary across any range, in practice it fluctuates between 0 and 200.
-         Values below 100 indicate uncertainty lower than the average of previous decades. Values above 100 indicate greater uncertainty.</p>
-      <p>Many business and personal decisions are based on prevailing economic uncertainty.
-         The objective of the I3E is to provide a quantifiable measure of this uncertainty that enables decision-making free from subjective bias.</p>
-      <br>
-      <h2 style="text-align: center;">I3E Global Uncertainty Index</h2>
-      <img src="plots/global.png" alt="I3E Global Index Plot" style="max-width: 100%; height: auto; margin-top: 10px;">
+    <!-- Content and table container wrapped side by side -->
+    <div class="content-wrapper">
+      <div class="content" id="content">
+        <h1>What is the I3E?</h1>
+        <p>The IESE Economic Uncertainty Index (I3E) is a daily indicator measuring economic uncertainty in the largest world economies.
+           The index is computed using the daily variation rates of four variables in each country:</p>
+        <ul>
+          <li>Domestic Equity Index</li>
+          <li>Domestic 10-year government bond prices</li>
+          <li>Domestic exchange rate</li>
+          <li>International Brent crude oil prices</li>
+        </ul>
+        <p>The index is adjusted so that its average value is 100. Although it can vary across any range, in practice it fluctuates between 0 and 200.
+           Values below 100 indicate uncertainty lower than the average of previous decades. Values above 100 indicate greater uncertainty.</p>
+        <p>Many business and personal decisions are based on prevailing economic uncertainty.
+           The objective of the I3E is to provide a quantifiable measure of this uncertainty that enables decision-making free from subjective bias.</p>
+        <br>
+        <h2 style="text-align: center;">I3E Global Uncertainty Index</h2>
+        <img src="plots/global.png" alt="I3E Global Index Plot" style="max-width: 100%; height: auto; margin-top: 10px;">
+      </div>
+      
+      <!-- Table container shown only on the Home view -->
+      <div id="table-container"></div>
     </div>
-    
-    <!-- Table container shown only on the Home view -->
-    <div id="table-container"></div>
   </div>
 
   <script>
