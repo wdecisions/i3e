@@ -11,7 +11,6 @@
       padding: 0;
       display: flex;
     }
-
     .sidebar {
       width: 160px;
       flex-shrink: 0; /* Keeps the sidebar width fixed */
@@ -21,33 +20,57 @@
       overflow-y: auto;
       border-right: 1px solid #ddd;
     }
-
     .sidebar h2 {
       font-size: 16px;
       margin-top: 0;
       margin-bottom: 8px;
     }
-
     .sidebar a {
       display: block;
-      padding: 4px 8px; /* Reduced padding for a more compact look */
+      padding: 4px 8px;
       color: #333;
       text-decoration: none;
-      margin-bottom: 2px; /* Reduced margin between links */
-      font-size: 14px; /* Optionally, reduce font size for a more compact list */
+      margin-bottom: 2px;
+      font-size: 14px;
     }
-
     .sidebar a:hover {
       background-color: #FF3B30;
       color: white;
     }
-
     .main {
       flex-grow: 1;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      padding: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
     }
-
+    .content {
+      flex-grow: 1;
+      text-align: justify;
+    }
+    /* Style for the table container on the right */
+    #table-container {
+      width: 300px;
+      margin-left: 20px;
+    }
+    /* Modern table styling */
+    #table-container table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: Arial, sans-serif;
+      margin-bottom: 20px;
+    }
+    #table-container th,
+    #table-container td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    #table-container th {
+      background-color: #FF3B30;
+      color: white;
+    }
     .header {
       background-color: #FF3B30;
       color: white;
@@ -57,24 +80,21 @@
       justify-content: space-between;
       align-items: center;
     }
-
     .header .title {
       font-weight: bold;
     }
-
     .header .subtitle {
       text-align: right;
       font-size: 18px;
       line-height: 1.2;
     }
-
     .nav {
       background-color: #FF3B30;
       overflow: hidden;
       padding: 0;
       margin: 0;
+      clear: both;
     }
-
     .nav a {
       float: left;
       display: block;
@@ -84,27 +104,17 @@
       text-decoration: none;
       font-weight: bold;
     }
-
     .nav a:hover {
       background-color: #e12f27;
     }
-
-    .content {
-      padding: 20px;
-      max-width: 1000px;
-      text-align: justify;
-    }
-
     h1 {
       color: #333333;
       font-size: 18px;
     }
-
     h2 {
       color: #333333;
       font-size: 16px;
-    } 
-    
+    }
     p {
       line-height: 1.6;
       color: #444;
@@ -140,23 +150,6 @@
   </div>
 
   <div class="main">
-    <div class="header">
-      <div class="title">I3E Economic Uncertainty Index</div>
-      <div class="subtitle">
-        International Center for Decision Making (ICDM)<br><br>
-        IESE Business School
-      </div>
-    </div>
-
-    <div class="nav">
-      <a href="#">Home</a>
-      <a href="#">Global Indices</a>
-      <a href="#">Data</a>
-      <a href="#">Research</a>
-      <a href="#">Contact</a>
-    </div>
-
-    <!-- The original main page view is stored here -->
     <div class="content" id="content">
       <h1>What is the I3E?</h1>
       <p>The IESE Economic Uncertainty Index (I3E) is a daily indicator measuring economic uncertainty in the largest world economies.
@@ -167,21 +160,35 @@
         <li>Domestic exchange rate</li>
         <li>International Brent crude oil prices</li>
       </ul>
-      <p>The index is adjusted so that its average value is 100. Although it can vary across any range, in practice fluctuates between 0 and 200. 
+      <p>The index is adjusted so that its average value is 100. Although it can vary across any range, in practice it fluctuates between 0 and 200.
          Values below 100 indicate uncertainty lower than the average of previous decades. Values above 100 indicate greater uncertainty.</p>
-      <p>Many business and personal decisions are based on prevailing economic uncertainty. 
-         The objective of the I3E is to provide a quantifiable measure of this uncertainty that enables decision-making free from subjective bias.</p><br>
+      <p>Many business and personal decisions are based on prevailing economic uncertainty.
+         The objective of the I3E is to provide a quantifiable measure of this uncertainty that enables decision-making free from subjective bias.</p>
+      <br>
       <h2 style="text-align: center;">I3E Global Uncertainty Index</h2>
       <img src="plots/global.png" alt="I3E Global Index Plot" style="max-width: 100%; height: auto; margin-top: 10px;">
-      
+    </div>
+
+    <!-- New table container on the right -->
+    <div id="table-container">
+      <!-- The table will be inserted here dynamically -->
     </div>
   </div>
 
+  <div class="nav">
+    <a href="#">Home</a>
+    <a href="#">Global Indices</a>
+    <a href="#">Data</a>
+    <a href="#">Research</a>
+    <a href="#">Contact</a>
+  </div>
+
   <script>
-    // Define a global variable for the current date (formatted as locale-specific)
+    // Define a global variable for yesterday's date
     var d = new Date();
     d.setDate(d.getDate() - 1);
     var time = d.toLocaleDateString();
+
     // Store the original content so that Home returns to it.
     var initialContent = document.getElementById('content').innerHTML;
 
@@ -195,10 +202,9 @@
         if (linkText === 'Home') {
           // Reset to the original main page view.
           contentDiv.innerHTML = initialContent;
-          
         } else if (linkText === 'Global Indices') {
           contentDiv.innerHTML = `
-            <h2>I3E Global Uncertainty Index</h2>
+            <h2 style="text-align: center;">I3E Global Uncertainty Index</h2>
             <img src="plots/global.png" alt="I3E Global Index Plot" style="max-width: 100%; height: auto; margin-top: 10px;">
             <h2>I3E Euro Uncertainty Index</h2>
             <img src="plots/germany.png" alt="I3E Euro Index Plot" style="max-width: 100%; height: auto; margin-top: 10px;">
@@ -206,15 +212,13 @@
         } else if (linkText === 'Data') {
           contentDiv.innerHTML = `
             <p><a href="i3e_global.txt" target="_blank">DATA</a> - Download I3E global data (txt). Updated daily (${time}).</p>
-            <p><a href="i3e_countries.txt" target="_blank">DATA</a> - Download I3E country data (txt). Updated daily (${time}).</p>              
-          </p>
+            <p><a href="i3e_countries.txt" target="_blank">DATA</a> - Download I3E country data (txt). Updated daily (${time}).</p>
           `;
         } else if (linkText === 'Research') {
           contentDiv.innerHTML = `
             <h2>Research Papers</h2>
-            <p><a href="methodology.pdf" target="_blank">Working paper</a> - I3E Technical Note.<p> 
-            <p><a href="methodology.pdf" target="_blank">Working paper</a> - Comparisson I3E, WUI, EPU and WIX.<p> 
-            </p>
+            <p><a href="methodology.pdf" target="_blank">Working paper</a> - I3E Technical Note.</p>
+            <p><a href="methodology.pdf" target="_blank">Working paper</a> - Comparison I3E, WUI, EPU and WIX.</p>
           `;
         } else if (linkText === 'Contact') {
           contentDiv.innerHTML = `
@@ -231,6 +235,48 @@
         }
       });
     });
+
+    // Function to load the i3e_countries.txt file and build the table
+    function loadCountryTable() {
+      fetch('i3e_countries.txt')
+        .then(response => response.text())
+        .then(text => {
+          // Split the text into lines and trim any extra whitespace
+          let lines = text.trim().split('\n');
+          if (lines.length < 2) return; // Must have a header and at least one data row
+          
+          // The first line contains the column headers (assume tab-separated)
+          let headers = lines[0].split('\t');
+          // Get the last non-empty line (the latest row of data)
+          let lastLine = lines[lines.length - 1].split('\t');
+          
+          // Build the table HTML (skip the column named "global")
+          let tableHTML = '<table>';
+          // Optional: Add a header row for clarity
+          tableHTML += '<tr><th>Country</th><th>Value</th></tr>';
+          
+          for (let i = 0; i < headers.length; i++) {
+            let header = headers[i].trim();
+            if (header.toLowerCase() === 'global') continue;
+            // Capitalize the first letter of the country name
+            let countryName = header.charAt(0).toUpperCase() + header.slice(1);
+            let value = lastLine[i].trim();
+            tableHTML += `<tr>
+                            <td>${countryName}</td>
+                            <td>${value}</td>
+                          </tr>`;
+          }
+          tableHTML += '</table>';
+          
+          // Insert the table HTML into the table container
+          document.getElementById('table-container').innerHTML = tableHTML;
+        })
+        .catch(error => {
+          console.error('Error loading country data:', error);
+        });
+    }
+    // Load the table after the page finishes loading
+    window.addEventListener('load', loadCountryTable);
   </script>
 </body>
 </html>
