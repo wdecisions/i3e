@@ -100,6 +100,11 @@
       font-size: 18px;
     }
 
+    h1 {
+      color: #333333;
+      font-size: 16px;
+    } 
+    
     p {
       line-height: 1.6;
       color: #444;
@@ -155,17 +160,17 @@
     <div class="content" id="content">
       <h1>What is the I3E?</h1>
       <p>The IESE Economic Uncertainty Index (I3E) is a daily indicator measuring economic uncertainty in some of the largest world economies.
-         To construct this index, we use the daily variation rates of the following variables in each of the covered countries:</p>
+         The index is computed using the daily variation rates of four variables in each of the covered countries:</p>
       <ul>
         <li>Domestic Equity Index</li>
         <li>Domestic 10-year government bond prices</li>
         <li>Domestic exchange rate</li>
         <li>International Brent crude oil prices</li>
       </ul>
-      <p>The index reflects the magnitude of the daily growth rate fluctuations of these four variables. It is adjusted so that its average value is 100.
-         Although, in theory, the index can vary across any range, in practice its value fluctuates between 0 and 200. 
-         Values below 100 indicate economic uncertainty lower than the average of the previous decade, while values above 100 indicate greater economic uncertainty.</p>
-      <p>Many business and personal decisions, both short- and long-term, are based on prevailing economic uncertainty. 
+      <p>The index reflects the magnitude of the daily fluctuations of these four variables. It is adjusted so that its average value is 100.
+         Although the index can vary across any range, in practice fluctuates between 0 and 200. 
+         Values below 100 indicate uncertainty lower than the average of previous decades. Values above 100 indicate greater uncertainty.</p>
+      <p>Many business and personal decisions are based on prevailing economic uncertainty. 
          The objective of the I3E is to provide a quantifiable measure of this uncertainty that enables decision-making based on information free from subjective bias.</p>
       <p><a href="methodology.pdf" target="_blank">I3E Technical Note (PDF)</a></p>
     </div>
@@ -197,7 +202,7 @@
           `;
         } else if (linkText === 'Data') {
           contentDiv.innerHTML = `
-            <p>Download I3E global data (txt) - updated daily (${time}). 
+            <p>Download I3E global data (txt)  - updated daily (${time}). 
               <a href="i3e_global.txt" target="_blank">DATA</a>
             </p>
             <p>Download I3E country data (txt) - updated daily (${time}). 
