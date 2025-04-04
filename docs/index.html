@@ -40,36 +40,10 @@
     .main {
       flex-grow: 1;
       display: flex;
-      flex-direction: row;
-      padding: 20px;
+      flex-direction: column;
       max-width: 1000px;
       margin: 0 auto;
-    }
-    .content {
-      flex-grow: 1;
-      text-align: justify;
-    }
-    /* Style for the table container on the right */
-    #table-container {
-      width: 300px;
-      margin-left: 20px;
-    }
-    /* Modern table styling */
-    #table-container table {
-      width: 100%;
-      border-collapse: collapse;
-      font-family: Arial, sans-serif;
-      margin-bottom: 20px;
-    }
-    #table-container th,
-    #table-container td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
-    #table-container th {
-      background-color: #FF3B30;
-      color: white;
+      padding: 20px;
     }
     .header {
       background-color: #FF3B30;
@@ -93,7 +67,6 @@
       overflow: hidden;
       padding: 0;
       margin: 0;
-      clear: both;
     }
     .nav a {
       float: left;
@@ -106,6 +79,31 @@
     }
     .nav a:hover {
       background-color: #e12f27;
+    }
+    .content {
+      padding: 20px;
+      text-align: justify;
+    }
+    #table-container {
+      width: 300px;
+      margin-top: 20px;
+    }
+    /* Modern table styling */
+    #table-container table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: Arial, sans-serif;
+      margin-bottom: 20px;
+    }
+    #table-container th,
+    #table-container td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    #table-container th {
+      background-color: #FF3B30;
+      color: white;
     }
     h1 {
       color: #333333;
@@ -150,6 +148,22 @@
   </div>
 
   <div class="main">
+    <div class="header">
+      <div class="title">I3E Economic Uncertainty Index</div>
+      <div class="subtitle">
+        International Center for Decision Making (ICDM)<br><br>
+        IESE Business School
+      </div>
+    </div>
+    
+    <div class="nav">
+      <a href="#">Home</a>
+      <a href="#">Global Indices</a>
+      <a href="#">Data</a>
+      <a href="#">Research</a>
+      <a href="#">Contact</a>
+    </div>
+    
     <div class="content" id="content">
       <h1>What is the I3E?</h1>
       <p>The IESE Economic Uncertainty Index (I3E) is a daily indicator measuring economic uncertainty in the largest world economies.
@@ -168,40 +182,35 @@
       <h2 style="text-align: center;">I3E Global Uncertainty Index</h2>
       <img src="plots/global.png" alt="I3E Global Index Plot" style="max-width: 100%; height: auto; margin-top: 10px;">
     </div>
-
-    <!-- New table container on the right -->
-    <div id="table-container">
-      <!-- The table will be inserted here dynamically -->
-    </div>
-  </div>
-
-  <div class="nav">
-    <a href="#">Home</a>
-    <a href="#">Global Indices</a>
-    <a href="#">Data</a>
-    <a href="#">Research</a>
-    <a href="#">Contact</a>
+    
+    <!-- Table container shown only on the Home view -->
+    <div id="table-container"></div>
   </div>
 
   <script>
-    // Define a global variable for yesterday's date
+    // Set global variable to yesterday's date
     var d = new Date();
     d.setDate(d.getDate() - 1);
     var time = d.toLocaleDateString();
-
-    // Store the original content so that Home returns to it.
+    
+    // Store the original content (Home view) including table container
     var initialContent = document.getElementById('content').innerHTML;
-
+    // Ensure table container is visible on Home
+    document.getElementById('table-container').style.display = 'block';
+    
     // Attach click event listeners to the nav links.
     document.querySelectorAll('.nav a').forEach(function(link) {
       link.addEventListener('click', function(event) {
         event.preventDefault();
         var contentDiv = document.getElementById('content');
+        var tableDiv = document.getElementById('table-container');
         var linkText = this.textContent.trim();
 
         if (linkText === 'Home') {
-          // Reset to the original main page view.
+          // Reset to the original Home view.
           contentDiv.innerHTML = initialContent;
+          tableDiv.style.display = 'block';
+          loadCountryTable();
         } else if (linkText === 'Global Indices') {
           contentDiv.innerHTML = `
             <h2 style="text-align: center;">I3E Global Uncertainty Index</h2>
@@ -209,17 +218,20 @@
             <h2>I3E Euro Uncertainty Index</h2>
             <img src="plots/germany.png" alt="I3E Euro Index Plot" style="max-width: 100%; height: auto; margin-top: 10px;">
           `;
+          tableDiv.style.display = 'none';
         } else if (linkText === 'Data') {
           contentDiv.innerHTML = `
             <p><a href="i3e_global.txt" target="_blank">DATA</a> - Download I3E global data (txt). Updated daily (${time}).</p>
             <p><a href="i3e_countries.txt" target="_blank">DATA</a> - Download I3E country data (txt). Updated daily (${time}).</p>
           `;
+          tableDiv.style.display = 'none';
         } else if (linkText === 'Research') {
           contentDiv.innerHTML = `
             <h2>Research Papers</h2>
             <p><a href="methodology.pdf" target="_blank">Working paper</a> - I3E Technical Note.</p>
             <p><a href="methodology.pdf" target="_blank">Working paper</a> - Comparison I3E, WUI, EPU and WIX.</p>
           `;
+          tableDiv.style.display = 'none';
         } else if (linkText === 'Contact') {
           contentDiv.innerHTML = `
             <p>
@@ -229,36 +241,32 @@
               IESE Business School
             </p>
           `;
+          tableDiv.style.display = 'none';
         } else {
-          // For any other link, clear the content.
           contentDiv.innerHTML = "";
+          tableDiv.style.display = 'none';
         }
       });
     });
-
+    
     // Function to load the i3e_countries.txt file and build the table
     function loadCountryTable() {
       fetch('i3e_countries.txt')
         .then(response => response.text())
         .then(text => {
-          // Split the text into lines and trim any extra whitespace
           let lines = text.trim().split('\n');
-          if (lines.length < 2) return; // Must have a header and at least one data row
-          
-          // The first line contains the column headers (assume tab-separated)
+          if (lines.length < 2) return;
+          // First line has headers (assumed tab-separated)
           let headers = lines[0].split('\t');
-          // Get the last non-empty line (the latest row of data)
+          // Get last line for the latest values
           let lastLine = lines[lines.length - 1].split('\t');
           
-          // Build the table HTML (skip the column named "global")
           let tableHTML = '<table>';
-          // Optional: Add a header row for clarity
           tableHTML += '<tr><th>Country</th><th>Value</th></tr>';
           
           for (let i = 0; i < headers.length; i++) {
             let header = headers[i].trim();
             if (header.toLowerCase() === 'global') continue;
-            // Capitalize the first letter of the country name
             let countryName = header.charAt(0).toUpperCase() + header.slice(1);
             let value = lastLine[i].trim();
             tableHTML += `<tr>
@@ -267,15 +275,12 @@
                           </tr>`;
           }
           tableHTML += '</table>';
-          
-          // Insert the table HTML into the table container
           document.getElementById('table-container').innerHTML = tableHTML;
         })
-        .catch(error => {
-          console.error('Error loading country data:', error);
-        });
+        .catch(error => console.error('Error loading country data:', error));
     }
-    // Load the table after the page finishes loading
+    
+    // Load the table when the page first loads (for Home view)
     window.addEventListener('load', loadCountryTable);
   </script>
 </body>
