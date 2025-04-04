@@ -92,7 +92,7 @@
     .content {
       padding: 20px;
       max-width: 1000px;
-      text-align: justify;   
+      text-align: justify;
     }
 
     h1 {
@@ -157,10 +157,10 @@
       <p>The IESE Economic Uncertainty Index (I3E) is a daily indicator measuring economic uncertainty in some of the largest world economies.
          To construct this index, we use the daily variation rates of the following variables in each of the covered countries:</p>
       <ul>
-      <li>Domestic Equity Index</li>
-      <li>Domestic 10-year government bond prices </li>
-      <li>Domestic exchange rate </li>
-      <li>International Brent crude oil prices </li>
+        <li>Domestic Equity Index</li>
+        <li>Domestic 10-year government bond prices</li>
+        <li>Domestic exchange rate</li>
+        <li>International Brent crude oil prices</li>
       </ul>
       <p>The index reflects the magnitude of the daily growth rate fluctuations of these four variables. It is adjusted so that its average value is 100.
          Although, in theory, the index can vary across any range, in practice its value fluctuates between 0 and 200. 
@@ -171,9 +171,9 @@
     </div>
   </div>
 
-  <script>    
+  <script>
     // Define a global variable for the current date (formatted as locale-specific)
-    var time = new Date().toLocaleDateString();    
+    var time = new Date().toLocaleDateString();
     // Store the original content so that Home returns to it.
     var initialContent = document.getElementById('content').innerHTML;
 
@@ -189,23 +189,34 @@
           contentDiv.innerHTML = initialContent;
           
         } else if (linkText === 'Global Indices') {
-          contentDiv.innerHTML = "<h2>I3E Global Uncertainty Index</h2>" +
-                                "<img src='plots/global.png' alt='I3E Global Index Plot' style='max-width: 100%; height: auto; margin-top: 10px;' />" +
-                                "<h2>I3E Euro Uncertainty Index</h2>" +
-                                "<img src='plots/germany.png' alt='I3E Euro Index Plot' style='max-width: 100%; height: auto; margin-top: 10px;' />";
-          
+          contentDiv.innerHTML = `
+            <h2>I3E Global Uncertainty Index</h2>
+            <img src="plots/global.png" alt="I3E Global Index Plot" style="max-width: 100%; height: auto; margin-top: 10px;">
+            <h2>I3E Euro Uncertainty Index</h2>
+            <img src="plots/germany.png" alt="I3E Euro Index Plot" style="max-width: 100%; height: auto; margin-top: 10px;">
+          `;
         } else if (linkText === 'Data') {
-          contentDiv.innerHTML = "<p>Download I3E global data (txt)  - updated daily (" + time + "). <a href='i3e_global.txt' target='_blank'>DATA</a></p>" +
-                                 "<p>Download I3E country data (txt) - updated daily (" + time + "). <a href='i3e_countries.txt' target='_blank'>DATA</a></p>"; 
-          
+          contentDiv.innerHTML = `
+            <p>Download I3E global data (txt) - updated daily (${time}). 
+              <a href="i3e_global.txt" target="_blank">DATA</a>
+            </p>
+            <p>Download I3E country data (txt) - updated daily (${time}). 
+              <a href="i3e_countries.txt" target="_blank">DATA</a>
+            </p>
+          `;
         } else if (linkText === 'Research') {
-          contentDiv.innerHTML = "<p>Research Papers</p>";
-          
+          contentDiv.innerHTML = `<p>Research Papers</p>`;
         } else if (linkText === 'Contact') {
-          contentDiv.innerHTML = "<p> Miguel Angel Ariño <br> Roberto Garcia-Castro <br> International Center for Decision Making <br> IESE Business School</p>";
-          
+          contentDiv.innerHTML = `
+            <p>
+              Miguel Angel Ariño <br>
+              Roberto Garcia-Castro <br>
+              International Center for Decision Making <br>
+              IESE Business School
+            </p>
+          `;
         } else {
-          // For 'Data' or any other link, adjust content as needed.
+          // For any other link, clear the content.
           contentDiv.innerHTML = "";
         }
       });
