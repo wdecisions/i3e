@@ -261,10 +261,12 @@
     });
     
     // Function to load the i3e_countries.txt file and build the table.
-    // This version removes the first column ("Date") from both the header row and the data row,
+    // This version removes the first column ("Date") from both the header row and the data rows,
     // then displays for each remaining column the country name, the latest I3E value,
-    // and the difference between the last value and the second last value.
-    // The date (time) is shown as plain text above the table in smaller font.
+    // and the change (difference between the last value and the second last value).
+    // The "Change" column adds a "+" sign if the value is positive (or zero), and the number is shown in green;
+    // if negative, the negative sign appears and the text is shown in red.
+    // The date (time) is shown in smaller text above the table.
     function loadCountryTable() {
       fetch('i3e_countries.txt')
         .then(response => response.text())
@@ -272,20 +274,20 @@
           let lines = text.trim().split('\n');
           if (lines.length < 3) return;  // Need at least header, second last, and last rows.
           
-          // Assume the first row contains headers: first cell "Date", remaining are country names.
+          // Header row: first cell "Date", remaining are country names.
           let headerParts = lines[0].split('\t');
           headerParts.shift(); // remove the "Date" column header
           
-          // Assume the last row contains current data: first cell is the date value, remaining are I3E values.
+          // Last row: current data (first cell is date, remaining are I3E values)
           let dataParts = lines[lines.length - 1].split('\t');
           dataParts.shift(); // remove the date value
           
-          // Assume the second last row contains previous data for difference calculation.
+          // Second last row: previous data for change calculation.
           let prevDataParts = lines[lines.length - 2].split('\t');
           prevDataParts.shift(); // remove the date value
           
           let tableHTML = '<table>';
-          tableHTML += '<tr><th>Country</th><th>I3E</th><th>Difference</th></tr>';
+          tableHTML += '<tr><th>Country</th><th>I3E</th><th>Change</th></tr>';
           
           for (let i = 0; i < headerParts.length; i++) {
             let countryName = headerParts[i].trim();
@@ -293,14 +295,19 @@
             let prevValue = prevDataParts[i] ? prevDataParts[i].trim() : "";
             let numValue = parseFloat(value);
             let numPrevValue = parseFloat(prevValue);
-            let diff = "";
-            if(!isNaN(numValue) && !isNaN(numPrevValue)) {
-              diff = (numValue - numPrevValue).toFixed(2);
+            let change = "";
+            if (!isNaN(numValue) && !isNaN(numPrevValue)) {
+              let diffValue = numValue - numPrevValue;
+              if (diffValue >= 0) {
+                change = `<span style="color:green;">+${diffValue.toFixed(2)}</span>`;
+              } else {
+                change = `<span style="color:red;">${diffValue.toFixed(2)}</span>`;
+              }
             }
             tableHTML += `<tr>
                             <td>${countryName}</td>
                             <td>${value}</td>
-                            <td>${diff}</td>
+                            <td>${change}</td>
                           </tr>`;
           }
           tableHTML += '</table>';
