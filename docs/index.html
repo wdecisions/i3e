@@ -262,37 +262,50 @@
     
     // Function to load the i3e_countries.txt file and build the table.
     // This version removes the first column ("Date") from both the header row and the data row,
-    // then displays for each remaining column the country name and the last value.
-    // The date (time) is shown as plain text above the table.
+    // then displays for each remaining column the country name, the latest I3E value,
+    // and the difference between the last value and the second last value.
+    // The date (time) is shown as plain text above the table in smaller font.
     function loadCountryTable() {
       fetch('i3e_countries.txt')
         .then(response => response.text())
         .then(text => {
           let lines = text.trim().split('\n');
-          if (lines.length < 2) return;
+          if (lines.length < 3) return;  // Need at least header, second last, and last rows.
           
           // Assume the first row contains headers: first cell "Date", remaining are country names.
           let headerParts = lines[0].split('\t');
           headerParts.shift(); // remove the "Date" column header
           
-          // Assume the last row contains data: first cell is the date value, remaining are I3E values.
+          // Assume the last row contains current data: first cell is the date value, remaining are I3E values.
           let dataParts = lines[lines.length - 1].split('\t');
           dataParts.shift(); // remove the date value
           
+          // Assume the second last row contains previous data for difference calculation.
+          let prevDataParts = lines[lines.length - 2].split('\t');
+          prevDataParts.shift(); // remove the date value
+          
           let tableHTML = '<table>';
-          tableHTML += '<tr><th>Country</th><th>I3E</th></tr>';
+          tableHTML += '<tr><th>Country</th><th>I3E</th><th>Difference</th></tr>';
           
           for (let i = 0; i < headerParts.length; i++) {
             let countryName = headerParts[i].trim();
             let value = dataParts[i] ? dataParts[i].trim() : "";
+            let prevValue = prevDataParts[i] ? prevDataParts[i].trim() : "";
+            let numValue = parseFloat(value);
+            let numPrevValue = parseFloat(prevValue);
+            let diff = "";
+            if(!isNaN(numValue) && !isNaN(numPrevValue)) {
+              diff = (numValue - numPrevValue).toFixed(2);
+            }
             tableHTML += `<tr>
                             <td>${countryName}</td>
                             <td>${value}</td>
+                            <td>${diff}</td>
                           </tr>`;
           }
           tableHTML += '</table>';
-          // Prepend the date above the table.
-          let fullHTML = `<div style="margin-bottom:10px;">Date: ${time}</div>` + tableHTML;
+          // Prepend the date above the table in smaller text.
+          let fullHTML = `<div style="font-size:12px; margin-bottom:10px;">Date: ${time}</div>` + tableHTML;
           document.getElementById('table-container').innerHTML = fullHTML;
         })
         .catch(error => console.error('Error loading country data:', error));
