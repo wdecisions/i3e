@@ -261,8 +261,8 @@
     });
     
     // Function to load the i3e_countries.txt file and build the table.
-    // This version removes the first row (which contains the date),
-    // then appends that date below the table (outside the table).
+    // This version removes the first column ("Date") from both the header row and the data row,
+    // then displays for each remaining column the country name and the last value.
     function loadCountryTable() {
       fetch('i3e_countries.txt')
         .then(response => response.text())
@@ -270,31 +270,26 @@
           let lines = text.trim().split('\n');
           if (lines.length < 2) return;
           
-          // Remove the first row (date row) and extract the date value.
-          let dateRow = lines.shift();
-          let dateParts = dateRow.split('\t');
-          let dateValue = dateParts[1] ? dateParts[1].trim() : "";
+          // Assume the first row contains headers: first cell "Date", remaining are country names.
+          let headerParts = lines[0].split('\t');
+          headerParts.shift(); // remove the "Date" column header
           
-          // Now use the next row as headers and the last row for the values.
-          let headers = lines[0].split('\t');
-          let lastLine = lines[lines.length - 1].split('\t');
+          // Assume the second row (or the last row if multiple exist) contains data:
+          let dataParts = lines[lines.length - 1].split('\t');
+          dataParts.shift(); // remove the date value
           
           let tableHTML = '<table>';
           tableHTML += '<tr><th>Country</th><th>I3E</th></tr>';
           
-          for (let i = 0; i < headers.length; i++) {
-            let header = headers[i].trim();
-            if (header.toLowerCase() === 'global') continue;
-            let countryName = header.charAt(0).toUpperCase() + header.slice(1);
-            let value = lastLine[i].trim();
+          for (let i = 0; i < headerParts.length; i++) {
+            let countryName = headerParts[i].trim();
+            let value = dataParts[i] ? dataParts[i].trim() : "";
             tableHTML += `<tr>
                             <td>${countryName}</td>
                             <td>${value}</td>
                           </tr>`;
           }
           tableHTML += '</table>';
-          // Append the date outside the table.
-          tableHTML += `<div style="margin-top:10px;">${dateValue}</div>`;
           document.getElementById('table-container').innerHTML = tableHTML;
         })
         .catch(error => console.error('Error loading country data:', error));
