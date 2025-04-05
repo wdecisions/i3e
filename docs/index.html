@@ -260,16 +260,23 @@
       });
     });
     
-    // Function to load the i3e_countries.txt file and build the table
+    // Function to load the i3e_countries.txt file and build the table.
+    // This version removes the first row (which contains the date),
+    // then appends that date below the table (outside the table).
     function loadCountryTable() {
       fetch('i3e_countries.txt')
         .then(response => response.text())
         .then(text => {
           let lines = text.trim().split('\n');
           if (lines.length < 2) return;
-          // First line has headers (assumed tab-separated)
+          
+          // Remove the first row (date row) and extract the date value.
+          let dateRow = lines.shift();
+          let dateParts = dateRow.split('\t');
+          let dateValue = dateParts[1] ? dateParts[1].trim() : "";
+          
+          // Now use the next row as headers and the last row for the values.
           let headers = lines[0].split('\t');
-          // Get last line for the latest values
           let lastLine = lines[lines.length - 1].split('\t');
           
           let tableHTML = '<table>';
@@ -286,6 +293,8 @@
                           </tr>`;
           }
           tableHTML += '</table>';
+          // Append the date outside the table.
+          tableHTML += `<div style="margin-top:10px;">${dateValue}</div>`;
           document.getElementById('table-container').innerHTML = tableHTML;
         })
         .catch(error => console.error('Error loading country data:', error));
