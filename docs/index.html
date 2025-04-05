@@ -263,6 +263,7 @@
     // Function to load the i3e_countries.txt file and build the table.
     // This version removes the first column ("Date") from both the header row and the data row,
     // then displays for each remaining column the country name and the last value.
+    // The date (time) is shown as plain text above the table.
     function loadCountryTable() {
       fetch('i3e_countries.txt')
         .then(response => response.text())
@@ -274,7 +275,7 @@
           let headerParts = lines[0].split('\t');
           headerParts.shift(); // remove the "Date" column header
           
-          // Assume the second row (or the last row if multiple exist) contains data:
+          // Assume the last row contains data: first cell is the date value, remaining are I3E values.
           let dataParts = lines[lines.length - 1].split('\t');
           dataParts.shift(); // remove the date value
           
@@ -290,7 +291,9 @@
                           </tr>`;
           }
           tableHTML += '</table>';
-          document.getElementById('table-container').innerHTML = tableHTML;
+          // Prepend the date above the table.
+          let fullHTML = `<div style="margin-bottom:10px;">Date: ${time}</div>` + tableHTML;
+          document.getElementById('table-container').innerHTML = fullHTML;
         })
         .catch(error => console.error('Error loading country data:', error));
     }
