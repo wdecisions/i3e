@@ -299,9 +299,9 @@
             if (!isNaN(numValue) && !isNaN(numPrevValue)) {
               let diffValue = numValue - numPrevValue;
               if (diffValue >= 0) {
-                change = `<span style="color:green;">+${diffValue.toFixed(2)}</span>`;
+                change = `<span style="color:green;">+${diffValue.toFixed(1)}</span>`;
               } else {
-                change = `<span style="color:red;">${diffValue.toFixed(2)}</span>`;
+                change = `<span style="color:red;">${diffValue.toFixed(1)}</span>`;
               }
             }
             tableHTML += `<tr>
