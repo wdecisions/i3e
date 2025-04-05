@@ -15,7 +15,7 @@
       width: 120px; /* Reduced width from 160px to 120px */
       flex-shrink: 0;
       background-color: #f4f4f4;
-      padding: 30px 10px 10px 10px; /* Added extra top padding */
+      padding: 40px 10px 10px 10px; /* Added extra top padding */
       height: 100vh;
       overflow-y: auto;
       border-right: 1px solid #ddd;
@@ -223,35 +223,35 @@
           tableDiv.style.display = 'block';
           loadCountryTable();
         } else if (linkText === 'Global Indices') {
-          contentDiv.innerHTML = 
+          contentDiv.innerHTML = `
             <h2 style="text-align: center;">I3E Global Uncertainty Index</h2>
             <img src="plots/global.png" alt="I3E Global Index Plot" style="max-width: 100%; height: auto; margin-top: 10px;">
             <h2>I3E Euro Uncertainty Index</h2>
             <img src="plots/germany.png" alt="I3E Euro Index Plot" style="max-width: 100%; height: auto; margin-top: 10px;">
-          ;
+          `;
           tableDiv.style.display = 'none';
         } else if (linkText === 'Data') {
-          contentDiv.innerHTML = 
+          contentDiv.innerHTML = `
             <p><a href="i3e_global.txt" target="_blank">DATA</a> - Download I3E global data (txt). Updated daily (${time}).</p>
             <p><a href="i3e_countries.txt" target="_blank">DATA</a> - Download I3E country data (txt). Updated daily (${time}).</p>
-          ;
+          `;
           tableDiv.style.display = 'none';
         } else if (linkText === 'Research') {
-          contentDiv.innerHTML = 
+          contentDiv.innerHTML = `
             <h2>Research Papers</h2>
             <p><a href="methodology.pdf" target="_blank">Working paper</a> - I3E Technical Note.</p>
             <p><a href="methodology.pdf" target="_blank">Working paper</a> - Comparison I3E, WUI, EPU and WIX.</p>
-          ;
+          `;
           tableDiv.style.display = 'none';
         } else if (linkText === 'Contact') {
-          contentDiv.innerHTML = 
+          contentDiv.innerHTML = `
             <p>
               Miguel Angel Ariño <br>
               Roberto Garcia-Castro <br>
               International Center for Decision Making <br>
               IESE Business School
             </p>
-          ;
+          `;
           tableDiv.style.display = 'none';
         } else {
           contentDiv.innerHTML = "";
@@ -260,16 +260,23 @@
       });
     });
     
-    // Function to load the i3e_countries.txt file and build the table
+    // Function to load the i3e_countries.txt file and build the table.
+    // This version removes the first row (which contains the date),
+    // then appends that date below the table (outside the table).
     function loadCountryTable() {
       fetch('i3e_countries.txt')
         .then(response => response.text())
         .then(text => {
           let lines = text.trim().split('\n');
           if (lines.length < 2) return;
-          // First line has headers (assumed tab-separated)
+          
+          // Remove the first row (date row) and extract the date value.
+          let dateRow = lines.shift();
+          let dateParts = dateRow.split('\t');
+          let dateValue = dateParts[1] ? dateParts[1].trim() : "";
+          
+          // Now use the next row as headers and the last row for the values.
           let headers = lines[0].split('\t');
-          // Get last line for the latest values
           let lastLine = lines[lines.length - 1].split('\t');
           
           let tableHTML = '<table>';
@@ -280,12 +287,14 @@
             if (header.toLowerCase() === 'global') continue;
             let countryName = header.charAt(0).toUpperCase() + header.slice(1);
             let value = lastLine[i].trim();
-            tableHTML += <tr>
+            tableHTML += `<tr>
                             <td>${countryName}</td>
                             <td>${value}</td>
-                          </tr>;
+                          </tr>`;
           }
           tableHTML += '</table>';
+          // Append the date outside the table.
+          tableHTML += `<div style="margin-top:10px;">${dateValue}</div>`;
           document.getElementById('table-container').innerHTML = tableHTML;
         })
         .catch(error => console.error('Error loading country data:', error));
