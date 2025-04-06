@@ -226,13 +226,14 @@
           contentDiv.innerHTML = `
             <h2 style="text-align: center;">I3E Global Uncertainty Index</h2>
             <img src="plots/global.png" alt="I3E Global Index Plot" style="max-width: 100%; height: auto; margin-top: 10px;">
-            <h2 style="text-align: center;">I3E Euro Uncertainty Index</h2>
+            <h2 style="text-align: center;">I3E Global Weighted Uncertainty Index</h2>
             <img src="plots/germany.png" alt="I3E Euro Index Plot" style="max-width: 100%; height: auto; margin-top: 10px;">
           `;
           tableDiv.style.display = 'none';
         } else if (linkText === 'Data') {
           contentDiv.innerHTML = `
             <p><a href="i3e_global.txt" target="_blank">DATA</a> - Download I3E global data (txt). Updated daily (${time}).</p>
+            <p><a href="i3e_global_weighted.txt" target="_blank">DATA</a> - Download I3E global weighted data (txt). Updated daily (${time}).</p>
             <p><a href="i3e_countries.txt" target="_blank">DATA</a> - Download I3E country data (txt). Updated daily (${time}).</p>
           `;
           tableDiv.style.display = 'none';
