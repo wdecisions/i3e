@@ -274,19 +274,15 @@
         .then(text => {
           let lines = text.trim().split('\n');
           if (lines.length < 3) return;  // Need at least header, second last, and last rows.
-          
-          // Header row: first cell "Date", remaining are country names.
-          let headerParts = lines[0].split('\t').slice(1); // FIX: use slice(1) instead of shift()
-          
-          // Last row: current data (first cell is date, remaining are I3E values)
+
+          // ✅ FIX: use slice(1) to skip the time index column safely
+          let headerParts = lines[0].split('\t').slice(1);
           let dataParts = lines[lines.length - 1].split('\t').slice(1);
-          
-          // Second last row: previous data for change calculation.
           let prevDataParts = lines[lines.length - 2].split('\t').slice(1);
-          
+
           let tableHTML = '<table>';
           tableHTML += '<tr><th>Country</th><th>I3E</th><th>Dif</th></tr>';
-          
+
           for (let i = 0; i < headerParts.length; i++) {
             let countryName = headerParts[i].trim();
             let value = dataParts[i] ? dataParts[i].trim() : "";
