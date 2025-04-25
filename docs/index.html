@@ -262,12 +262,6 @@
     });
     
     // Function to load the i3e_countries.txt file and build the table.
-    // This version removes the first column ("Date") from both the header row and the data rows,
-    // then displays for each remaining column the country name, the latest I3E value,
-    // and the change (difference between the last value and the second last value).
-    // The "Change" column adds a "+" sign if the value is positive (or zero), and the number is shown in green;
-    // if negative, the negative sign appears and the text is shown in red.
-    // The date (time) is shown in smaller text above the table.
     function loadCountryTable() {
       fetch('i3e_countries.txt')
         .then(response => response.text())
