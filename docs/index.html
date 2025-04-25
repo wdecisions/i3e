@@ -276,16 +276,13 @@
           if (lines.length < 3) return;  // Need at least header, second last, and last rows.
           
           // Header row: first cell "Date", remaining are country names.
-          let headerParts = lines[0].split('\t');
-          headerParts.shift(); // remove the "Date" column header
+          let headerParts = lines[0].split('\t').slice(1); // FIX: use slice(1) instead of shift()
           
           // Last row: current data (first cell is date, remaining are I3E values)
-          let dataParts = lines[lines.length - 1].split('\t');
-          dataParts.shift(); // remove the date value
+          let dataParts = lines[lines.length - 1].split('\t').slice(1);
           
           // Second last row: previous data for change calculation.
-          let prevDataParts = lines[lines.length - 2].split('\t');
-          prevDataParts.shift(); // remove the date value
+          let prevDataParts = lines[lines.length - 2].split('\t').slice(1);
           
           let tableHTML = '<table>';
           tableHTML += '<tr><th>Country</th><th>I3E</th><th>Dif</th></tr>';
