@@ -275,8 +275,11 @@
           let lines = text.trim().split('\n');
           if (lines.length < 3) return;  // Need at least header, second last, and last rows.
 
-          // ✅ FIX: use slice(1) to skip the time index column safely
-          let headerParts = lines[0].split('\t').slice(1);
+          // Parse header line
+          let headerParts = lines[0].split('\t');
+          if (headerParts[0].trim() === '') headerParts.shift();  // Remove placeholder for date column
+
+          // Parse last two data lines and remove date (first column)
           let dataParts = lines[lines.length - 1].split('\t').slice(1);
           let prevDataParts = lines[lines.length - 2].split('\t').slice(1);
 
@@ -305,7 +308,7 @@
                           </tr>`;
           }
           tableHTML += '</table>';
-          // Prepend the date above the table in smaller text.
+
           let fullHTML = `<div style="font-size:12px; margin-bottom:10px;">Date: ${time}</div>` + tableHTML;
           document.getElementById('table-container').innerHTML = fullHTML;
         })
