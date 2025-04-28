@@ -200,9 +200,21 @@
 
   <script>
     // Set global variable to yesterday's date
-    var d = new Date();
-    d.setDate(d.getDate() - 1);
-    var time = d.toLocaleDateString();
+    var time = ""; // initialize empty time
+
+    fetch('i3e_countries.txt')
+      .then(response => response.text())
+      .then(text => {
+        let lines = text.trim().split('\n');
+        if (lines.length < 2) return;  // Need at least two rows (header + 1 row of data)
+        let lastLine = lines[lines.length - 1];
+        let firstCell = lastLine.split('\t')[0].trim(); // Get the first column (date)
+        time = firstCell; // Assign it to the global time variable
+        loadCountryTable(); // Now that time is ready, load the table
+      })
+      .catch(error => console.error('Error loading time from country data:', error));
+
+
     
     // Store the original content (Home view) including table container
     var initialContent = document.getElementById('content').innerHTML;
@@ -309,8 +321,8 @@
         .catch(error => console.error('Error loading country data:', error));
     }
     
-    // Load the table when the page first loads (for Home view)
-    window.addEventListener('load', loadCountryTable);
+    // Load table will be called after fetching time, no need to call here
+
   </script>
 </body>
 </html>
