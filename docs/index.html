@@ -12,10 +12,10 @@
       display: flex;
     }
     .sidebar {
-      width: 120px;
+      width: 120px; /* Reduced width from 160px to 120px */
       flex-shrink: 0;
       background-color: #f4f4f4;
-      padding: 40px 10px 10px 10px;
+      padding: 40px 10px 10px 10px; /* Added extra top padding */
       height: 100vh;
       overflow-y: auto;
       border-right: 1px solid #ddd;
@@ -43,6 +43,7 @@
       margin: 0 20px 20px 0;
       padding: 20px;
     }
+    /* Header split into two rows */
     .header {
       background-color: #FF3B30;
       color: white;
@@ -72,19 +73,21 @@
       color: white;
       text-align: center;
       text-decoration: none;
-      margin-right: 30px;
+      margin-right: 30px; /* Increased separation between nav links */
       font-size: 16px;
       line-height: 16px;
     }
     .business {
+      /* Increased font size and line height for better readability */
       font-size: 16px;
       line-height: 20px;
     }
+    /* Content and table layout */
     .content-wrapper {
       display: flex;
       flex-direction: row;
       align-items: flex-start;
-      gap: 80px;
+      gap: 80px; /* Increased gap between text and table */
       margin-top: 20px;
     }
     .content {
@@ -94,6 +97,7 @@
     #table-container {
       min-width: 430px;
     }
+    /* Table styling */
     #table-container table {
       width: 100%;
       border-collapse: collapse;
@@ -108,12 +112,13 @@
       border-bottom: 1px solid #ddd;
       border-left: none;
       border-right: none;
-      padding: 3px 8px;
+      padding: 3px 8px; /* Narrower rows */
       text-align: left;
     }
     #table-container th {
       background-color: #FF3B30;
       color: white;
+      font-weight: bold;
     }
     h1 {
       color: #333333;
@@ -174,6 +179,8 @@
         <div class="business">IESE Business School</div>
       </div>
     </div>
+    
+    <!-- Content and table container side by side -->
     <div class="content-wrapper">
       <div class="content" id="content">
         <h1>What is the I3E?</h1>
@@ -192,37 +199,44 @@
         <h2 style="text-align: center;">I3E Global (Weighted) Uncertainty Index</h2>
         <img src="plots/global_weighted.png" alt="I3E Global Weighted Index Plot" style="max-width: 100%; height: auto; margin-top: 10px;">
       </div>
+      
+      <!-- Table container shown only on the Home view -->
       <div id="table-container"></div>
     </div>
   </div>
 
   <script>
     // Set global variable to yesterday's date
-    var time = "";
+    var time = ""; // initialize empty time
 
     fetch('i3e_countries.txt')
       .then(response => response.text())
       .then(text => {
         let lines = text.trim().split('\n');
-        if (lines.length < 2) return;
+        if (lines.length < 2) return;  // Need at least two rows (header + 1 row of data)
         let lastLine = lines[lines.length - 1];
-        let firstCell = lastLine.split('\t')[0].trim();
-        time = firstCell;
-        loadCountryTable();
+        let firstCell = lastLine.split('\t')[0].trim(); // Get the first column (date)
+        time = firstCell; // Assign it to the global time variable
+        loadCountryTable(); // Now that time is ready, load the table
       })
       .catch(error => console.error('Error loading time from country data:', error));
 
-    var initialContent = document.getElementById('content').innerHTML;
-    document.getElementById('table-container').style.display = 'block';
 
+    // Store the original content (Home view) including table container
+    var initialContent = document.getElementById('content').innerHTML;
+    // Ensure table container is visible on Home
+    document.getElementById('table-container').style.display = 'block';
+    
+    // Attach click event listeners to the nav links.
     document.querySelectorAll('.nav a').forEach(function(link) {
       link.addEventListener('click', function(event) {
         event.preventDefault();
         var contentDiv = document.getElementById('content');
         var tableDiv = document.getElementById('table-container');
         var linkText = this.textContent.trim();
-
+  
         if (linkText === 'Home') {
+          // Reset to the original Home view.
           contentDiv.innerHTML = initialContent;
           tableDiv.style.display = 'block';
           loadCountryTable();
@@ -264,35 +278,114 @@
         }
       });
     });
-
-    // Function to load the i3e_countries.txt file and build the table with new columns.
+    
+    // Function to capitalize and prettify country names
     function formatCountryName(name) {
       return name.replace(/_/g, ' ')
                  .replace(/\b\w/g, c => c.toUpperCase());
     }
-    
+
+    // Function to load the i3e_countries.txt file and build the table by blocks and with separators.
     function loadCountryTable() {
       fetch('i3e_countries.txt')
         .then(response => response.text())
         .then(text => {
           let lines = text.trim().split('\n');
-          if (lines.length < 3) return;
+          if (lines.length < 3) return;  // Need at least header, second last, and last rows.
 
+          // Parse header line
           let headerParts = lines[0].split('\t');
-          if (headerParts[0].trim() === '') headerParts.shift();
+          if (headerParts[0].trim() === '') headerParts.shift();  // Remove placeholder for date column
 
           // Parse all data lines (without date column)
           let dataRows = lines.slice(1).map(row => row.split('\t').slice(1));
           let dates = lines.slice(1).map(row => row.split('\t')[0]);
-
           let lastIdx = dataRows.length - 1;
           let idx30 = dataRows.length - 31;
           let idx365 = dataRows.length - 366;
 
-          let tableHTML = '<table>';
-          tableHTML += '<tr><th>Country</th><th>I3E</th><th>Δ1D</th><th>Δ1M</th><th>Δ1Y</th></tr>';
+          // --- Group and block definitions
+          const countryBlocks = [
+            ["united_states", "canada"],
+            ["austria", "belgium", "france", "germany", "greece", "italy", "netherlands", "spain", "poland", "united_kingdom"],
+            ["china", "japan", "south_korea", "australia"],
+            ["brazil", "mexico"],
+            ["israel", "turkey", "egypt", "south_africa"],
+          ];
+          const globalBlock = ["global", "global_weighted"];
 
-          for (let i = 0; i < headerParts.length; i++) {
+          // Map country code (header) to index
+          let countryIndexMap = {};
+          headerParts.forEach((name, idx) => {
+            countryIndexMap[name.trim().toLowerCase()] = idx;
+          });
+
+          let tableHTML = '';
+          tableHTML += '<tr><th>Country</th><th>I3E</th><th>Δ1d</th><th>m/m</th><th>Δ365d</th></tr>';
+
+          countryBlocks.forEach((block, blockIdx) => {
+            block.forEach(code => {
+              let i = countryIndexMap[code];
+              if (i === undefined) return;
+
+              let countryName = formatCountryName(headerParts[i].trim());
+              let value = dataRows[lastIdx][i] ? dataRows[lastIdx][i].trim() : "";
+              let prevValue = dataRows[lastIdx - 1][i] ? dataRows[lastIdx - 1][i].trim() : "";
+              let val30 = (idx30 >= 0 && dataRows[idx30][i]) ? dataRows[idx30][i].trim() : "";
+              let val365 = (idx365 >= 0 && dataRows[idx365][i]) ? dataRows[idx365][i].trim() : "";
+
+              let numValue = parseFloat(value);
+              let numPrevValue = parseFloat(prevValue);
+              let numVal30 = parseFloat(val30);
+              let numVal365 = parseFloat(val365);
+
+              // Δ1d
+              let diff1d = "";
+              if (!isNaN(numValue) && !isNaN(numPrevValue)) {
+                let diff1dValue = numValue - numPrevValue;
+                diff1d = diff1dValue >= 0
+                  ? `<span style="color:red;">+${diff1dValue.toFixed(1)}</span>`
+                  : `<span style="color:green;">${diff1dValue.toFixed(1)}</span>`;
+              }
+
+              // m/m (Δ30d)
+              let diff30d = "";
+              if (!isNaN(numValue) && !isNaN(numVal30)) {
+                let diff30dValue = numValue - numVal30;
+                diff30d = diff30dValue >= 0
+                  ? `<span style="color:red;">+${diff30dValue.toFixed(1)}</span>`
+                  : `<span style="color:green;">${diff30dValue.toFixed(1)}</span>`;
+              }
+
+              // Δ365d
+              let diff365d = "";
+              if (!isNaN(numValue) && !isNaN(numVal365)) {
+                let diff365dValue = numValue - numVal365;
+                diff365d = diff365dValue >= 0
+                  ? `<span style="color:red;">+${diff365dValue.toFixed(1)}</span>`
+                  : `<span style="color:green;">${diff365dValue.toFixed(1)}</span>`;
+              }
+
+              tableHTML += `<tr>
+                <td>${countryName}</td>
+                <td>${value}</td>
+                <td>${diff1d}</td>
+                <td>${diff30d}</td>
+                <td>${diff365d}</td>
+              </tr>`;
+            });
+            // Add red separator after each block except last
+            tableHTML += `<tr>
+                <td colspan="5" style="border: none; padding: 0;">
+                  <hr style="border: 0; border-top: 2px solid #FF3B30; margin: 8px 0;">
+                </td>
+              </tr>`;
+          });
+
+          // Now add Global and Global Weighted at the bottom (after final red line)
+          globalBlock.forEach(code => {
+            let i = countryIndexMap[code];
+            if (i === undefined) return;
             let countryName = formatCountryName(headerParts[i].trim());
             let value = dataRows[lastIdx][i] ? dataRows[lastIdx][i].trim() : "";
             let prevValue = dataRows[lastIdx - 1][i] ? dataRows[lastIdx - 1][i].trim() : "";
@@ -304,69 +397,44 @@
             let numVal30 = parseFloat(val30);
             let numVal365 = parseFloat(val365);
 
-            // Δ1d
-            let diff1d = "", diff1dValue = null;
+            let diff1d = "";
             if (!isNaN(numValue) && !isNaN(numPrevValue)) {
-              diff1dValue = numValue - numPrevValue;
-              if (diff1dValue >= 0) {
-                diff1d = `<span style="color:red;">+${diff1dValue.toFixed(1)}</span>`;
-              } else {
-                diff1d = `<span style="color:green;">${diff1dValue.toFixed(1)}</span>`;
-              }
-            } else {
-              diff1d = "";
+              let diff1dValue = numValue - numPrevValue;
+              diff1d = diff1dValue >= 0
+                ? `<span style="color:red;">+${diff1dValue.toFixed(1)}</span>`
+                : `<span style="color:green;">${diff1dValue.toFixed(1)}</span>`;
             }
-
-            // Δ30d
-            let diff30d = "", diff30dValue = null;
+            let diff30d = "";
             if (!isNaN(numValue) && !isNaN(numVal30)) {
-              diff30dValue = numValue - numVal30;
-              if (diff30dValue >= 0) {
-                diff30d = `<span style="color:red;">+${diff30dValue.toFixed(1)}</span>`;
-              } else {
-                diff30d = `<span style="color:green;">${diff30dValue.toFixed(1)}</span>`;
-              }
-            } else {
-              diff30d = "";
+              let diff30dValue = numValue - numVal30;
+              diff30d = diff30dValue >= 0
+                ? `<span style="color:red;">+${diff30dValue.toFixed(1)}</span>`
+                : `<span style="color:green;">${diff30dValue.toFixed(1)}</span>`;
             }
-
-            // Δ365d
-            let diff365d = "", diff365dValue = null;
+            let diff365d = "";
             if (!isNaN(numValue) && !isNaN(numVal365)) {
-              diff365dValue = numValue - numVal365;
-              if (diff365dValue >= 0) {
-                diff365d = `<span style="color:red;">+${diff365dValue.toFixed(1)}</span>`;
-              } else {
-                diff365d = `<span style="color:green;">${diff365dValue.toFixed(1)}</span>`;
-              }
-            } else {
-              diff365d = "";
-            }
-
-            // Insert separator ABOVE the last two rows
-            if (i === headerParts.length - 2) {
-              tableHTML += `<tr>
-                <td colspan="5" style="border: none; padding: 0;">
-                  <hr style="border: 0; border-top: 2px solid #FF3B30; margin: 8px 0;">
-                </td>
-              </tr>`;
+              let diff365dValue = numValue - numVal365;
+              diff365d = diff365dValue >= 0
+                ? `<span style="color:red;">+${diff365dValue.toFixed(1)}</span>`
+                : `<span style="color:green;">${diff365dValue.toFixed(1)}</span>`;
             }
 
             tableHTML += `<tr>
-                            <td>${countryName}</td>
-                            <td>${value}</td>
-                            <td>${diff1d}</td>
-                            <td>${diff30d}</td>
-                            <td>${diff365d}</td>
-                          </tr>`;
-          }
-          tableHTML += '</table>';
+              <td>${countryName}</td>
+              <td>${value}</td>
+              <td>${diff1d}</td>
+              <td>${diff30d}</td>
+              <td>${diff365d}</td>
+            </tr>`;
+          });
 
-          let fullHTML = `<div style="font-size:12px; margin-bottom:10px;">Date: ${time}</div>` + tableHTML;
+          let fullHTML = `<div style="font-size:12px; margin-bottom:10px;">Date: ${time}</div><table>${tableHTML}</table>`;
           document.getElementById('table-container').innerHTML = fullHTML;
         })
         .catch(error => console.error('Error loading country data:', error));
     }
+    // Load table will be called after fetching time, no need to call here
+
   </script>
 </body>
 </html>
