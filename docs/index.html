@@ -262,6 +262,11 @@
     });
 
     // Function to load the i3e_countries.txt file and build the table with new columns.
+    function formatCountryName(name) {
+      return name.replace(/_/g, ' ')
+                 .replace(/\b\w/g, c => c.toUpperCase());
+    }
+    
     function loadCountryTable() {
       fetch('i3e_countries.txt')
         .then(response => response.text())
@@ -284,7 +289,7 @@
           tableHTML += '<tr><th>Country</th><th>I3E</th><th>Δ1D</th><th>Δ1M</th><th>Δ1Y</th></tr>';
 
           for (let i = 0; i < headerParts.length; i++) {
-            let countryName = headerParts[i].trim();
+            let countryName = formatCountryName(headerParts[i].trim());
             let value = dataRows[lastIdx][i] ? dataRows[lastIdx][i].trim() : "";
             let prevValue = dataRows[lastIdx - 1][i] ? dataRows[lastIdx - 1][i].trim() : "";
             let val30 = (idx30 >= 0 && dataRows[idx30][i]) ? dataRows[idx30][i].trim() : "";
