@@ -12,10 +12,10 @@
       display: flex;
     }
     .sidebar {
-      width: 120px; /* Reduced width from 160px to 120px */
+      width: 120px;
       flex-shrink: 0;
       background-color: #f4f4f4;
-      padding: 40px 10px 10px 10px; /* Added extra top padding */
+      padding: 40px 10px 10px 10px;
       height: 100vh;
       overflow-y: auto;
       border-right: 1px solid #ddd;
@@ -39,15 +39,17 @@
     }
     .main {
       flex-grow: 1;
-      max-width: 1500px; /* Extended max-width for more space on the right */
+      max-width: 1700px; /* Extended max-width for more space */
       margin: 0 20px 20px 0;
       padding: 20px;
     }
-    /* Header split into two rows */
     .header {
       background-color: #FF3B30;
       color: white;
       padding: 10px 20px;
+      width: calc(100% + 120px + 20px); /* Extend header to align with table */
+      margin-left: -20px;
+      box-sizing: border-box;
     }
     .header-top {
       display: flex;
@@ -70,21 +72,19 @@
       color: white;
       text-align: center;
       text-decoration: none;
-      margin-right: 30px; /* Increased separation between nav links */
+      margin-right: 30px;
       font-size: 16px;
       line-height: 16px;
     }
     .business {
-      /* Increased font size and line height for better readability */
       font-size: 16px;
       line-height: 20px;
     }
-    /* Content and table layout */
     .content-wrapper {
       display: flex;
       flex-direction: row;
       align-items: flex-start;
-      gap: 80px; /* Increased gap between text and table */
+      gap: 80px;
       margin-top: 20px;
     }
     .content {
@@ -92,9 +92,8 @@
       text-align: justify;
     }
     #table-container {
-      width: 200px;
+      min-width: 430px;
     }
-    /* Table styling */
     #table-container table {
       width: 100%;
       border-collapse: collapse;
@@ -171,8 +170,6 @@
         <div class="business">IESE Business School</div>
       </div>
     </div>
-    
-    <!-- Content and table container side by side -->
     <div class="content-wrapper">
       <div class="content" id="content">
         <h1>What is the I3E?</h1>
@@ -191,45 +188,37 @@
         <h2 style="text-align: center;">I3E Global (Weighted) Uncertainty Index</h2>
         <img src="plots/global_weighted.png" alt="I3E Global Weighted Index Plot" style="max-width: 100%; height: auto; margin-top: 10px;">
       </div>
-      
-      <!-- Table container shown only on the Home view -->
       <div id="table-container"></div>
     </div>
   </div>
 
   <script>
     // Set global variable to yesterday's date
-    var time = ""; // initialize empty time
+    var time = "";
 
     fetch('i3e_countries.txt')
       .then(response => response.text())
       .then(text => {
         let lines = text.trim().split('\n');
-        if (lines.length < 2) return;  // Need at least two rows (header + 1 row of data)
+        if (lines.length < 2) return;
         let lastLine = lines[lines.length - 1];
-        let firstCell = lastLine.split('\t')[0].trim(); // Get the first column (date)
-        time = firstCell; // Assign it to the global time variable
-        loadCountryTable(); // Now that time is ready, load the table
+        let firstCell = lastLine.split('\t')[0].trim();
+        time = firstCell;
+        loadCountryTable();
       })
       .catch(error => console.error('Error loading time from country data:', error));
 
-
-    
-    // Store the original content (Home view) including table container
     var initialContent = document.getElementById('content').innerHTML;
-    // Ensure table container is visible on Home
     document.getElementById('table-container').style.display = 'block';
-    
-    // Attach click event listeners to the nav links.
+
     document.querySelectorAll('.nav a').forEach(function(link) {
       link.addEventListener('click', function(event) {
         event.preventDefault();
         var contentDiv = document.getElementById('content');
         var tableDiv = document.getElementById('table-container');
         var linkText = this.textContent.trim();
-  
+
         if (linkText === 'Home') {
-          // Reset to the original Home view.
           contentDiv.innerHTML = initialContent;
           tableDiv.style.display = 'block';
           loadCountryTable();
@@ -271,45 +260,86 @@
         }
       });
     });
-    
-    // Function to load the i3e_countries.txt file and build the table.
+
+    // Function to load the i3e_countries.txt file and build the table with new columns.
     function loadCountryTable() {
       fetch('i3e_countries.txt')
         .then(response => response.text())
         .then(text => {
           let lines = text.trim().split('\n');
-          if (lines.length < 3) return;  // Need at least header, second last, and last rows.
+          if (lines.length < 3) return;
 
-          // Parse header line
           let headerParts = lines[0].split('\t');
-          if (headerParts[0].trim() === '') headerParts.shift();  // Remove placeholder for date column
+          if (headerParts[0].trim() === '') headerParts.shift();
 
-          // Parse last two data lines and remove date (first column)
-          let dataParts = lines[lines.length - 1].split('\t').slice(1);
-          let prevDataParts = lines[lines.length - 2].split('\t').slice(1);
+          // Parse all data lines (without date column)
+          let dataRows = lines.slice(1).map(row => row.split('\t').slice(1));
+          let dates = lines.slice(1).map(row => row.split('\t')[0]);
+
+          let lastIdx = dataRows.length - 1;
+          let idx30 = dataRows.length - 31;
+          let idx365 = dataRows.length - 366;
 
           let tableHTML = '<table>';
-          tableHTML += '<tr><th>Country</th><th>I3E</th><th>Dif</th></tr>';
+          tableHTML += '<tr><th>Country</th><th>I3E</th><th>Δ1d</th><th>Δ30d</th><th>Δ365d</th></tr>';
 
           for (let i = 0; i < headerParts.length; i++) {
             let countryName = headerParts[i].trim();
-            let value = dataParts[i] ? dataParts[i].trim() : "";
-            let prevValue = prevDataParts[i] ? prevDataParts[i].trim() : "";
+            let value = dataRows[lastIdx][i] ? dataRows[lastIdx][i].trim() : "";
+            let prevValue = dataRows[lastIdx - 1][i] ? dataRows[lastIdx - 1][i].trim() : "";
+            let val30 = (idx30 >= 0 && dataRows[idx30][i]) ? dataRows[idx30][i].trim() : "";
+            let val365 = (idx365 >= 0 && dataRows[idx365][i]) ? dataRows[idx365][i].trim() : "";
+
             let numValue = parseFloat(value);
             let numPrevValue = parseFloat(prevValue);
-            let change = "";
+            let numVal30 = parseFloat(val30);
+            let numVal365 = parseFloat(val365);
+
+            // Δ1d
+            let diff1d = "", diff1dValue = null;
             if (!isNaN(numValue) && !isNaN(numPrevValue)) {
-              let diffValue = numValue - numPrevValue;
-              if (diffValue >= 0) {
-                change = `<span style="color:red;">+${diffValue.toFixed(1)}</span>`;
+              diff1dValue = numValue - numPrevValue;
+              if (diff1dValue >= 0) {
+                diff1d = `<span style="color:red;">+${diff1dValue.toFixed(1)}</span>`;
               } else {
-                change = `<span style="color:green;">${diffValue.toFixed(1)}</span>`;
+                diff1d = `<span style="color:green;">${diff1dValue.toFixed(1)}</span>`;
               }
+            } else {
+              diff1d = "";
             }
+
+            // Δ30d
+            let diff30d = "", diff30dValue = null;
+            if (!isNaN(numValue) && !isNaN(numVal30)) {
+              diff30dValue = numValue - numVal30;
+              if (diff30dValue >= 0) {
+                diff30d = `<span style="color:red;">+${diff30dValue.toFixed(1)}</span>`;
+              } else {
+                diff30d = `<span style="color:green;">${diff30dValue.toFixed(1)}</span>`;
+              }
+            } else {
+              diff30d = "";
+            }
+
+            // Δ365d
+            let diff365d = "", diff365dValue = null;
+            if (!isNaN(numValue) && !isNaN(numVal365)) {
+              diff365dValue = numValue - numVal365;
+              if (diff365dValue >= 0) {
+                diff365d = `<span style="color:red;">+${diff365dValue.toFixed(1)}</span>`;
+              } else {
+                diff365d = `<span style="color:green;">${diff365dValue.toFixed(1)}</span>`;
+              }
+            } else {
+              diff365d = "";
+            }
+
             tableHTML += `<tr>
                             <td>${countryName}</td>
                             <td>${value}</td>
-                            <td>${change}</td>
+                            <td>${diff1d}</td>
+                            <td>${diff30d}</td>
+                            <td>${diff365d}</td>
                           </tr>`;
           }
           tableHTML += '</table>';
@@ -319,9 +349,6 @@
         })
         .catch(error => console.error('Error loading country data:', error));
     }
-    
-    // Load table will be called after fetching time, no need to call here
-
   </script>
 </body>
 </html>
