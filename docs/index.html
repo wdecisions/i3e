@@ -97,14 +97,18 @@
     #table-container table {
       width: 100%;
       border-collapse: collapse;
+      border: none;
       font-family: inherit;
       font-size: 14px;
       margin-bottom: 20px;
     }
     #table-container th,
     #table-container td {
-      border: 1px solid #ddd;
-      padding: 3px 8px;  /* 3px vertical, 8px horizontal */
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      border-left: none;
+      border-right: none;
+      padding: 3px 8px;
       text-align: left;
     }
     #table-container th {
