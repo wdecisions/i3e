@@ -339,6 +339,15 @@
               diff365d = "";
             }
 
+            // Insert separator ABOVE the last two rows
+            if (i === headerParts.length - 2) {
+              tableHTML += `<tr>
+                <td colspan="5" style="border: none; padding: 0;">
+                  <hr style="border: 0; border-top: 2px solid #FF3B30; margin: 8px 0;">
+                </td>
+              </tr>`;
+            }
+
             tableHTML += `<tr>
                             <td>${countryName}</td>
                             <td>${value}</td>
