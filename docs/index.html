@@ -444,7 +444,7 @@
             </tr>`;
           });
 
-          let fullHTML = `<div style="font-size:12px; margin-bottom:10px;">Date: ${time}</div><table>${tableHTML}</table>`;
+          let fullHTML = `<div style="font-size:14px; margin-bottom:10px;">Date: ${time}</div><table>${tableHTML}</table>`;
           document.getElementById('table-container').innerHTML = fullHTML;
         })
         .catch(error => console.error('Error loading country data:', error));
