@@ -2,8 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>I3E Economic Uncertainty Index</title>
-  <link rel="icon" type="image/png" href="favicon.png">
+  <title>I3E Economic Uncertainty Index | Global Economic Uncertainty Indicator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="The I3E Economic Uncertainty Index measures and compares economic uncertainty in major economies worldwide. Updated daily, unbiased and transparent.">
+  <meta name="keywords" content="I3E, Economic Uncertainty, Uncertainty Index, Economic Risk, IESE, Economic Indicators, International Center for Decision Making, Global Economic Index, Research, Data">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://wdecisions.github.io/i3e/">
+  <link rel="icon" type="image/png" href="https://wdecisions.github.io/i3e/favicon.png">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="I3E Economic Uncertainty Index">
+  <meta property="og:description" content="Track economic uncertainty globally with the I3E Index. Daily updates, transparent methodology, downloadable data for researchers and decision-makers.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wdecisions.github.io/i3e/">
+  <meta property="og:image" content="https://wdecisions.github.io/i3e/plots/global_weighted.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="I3E Economic Uncertainty Index">
+  <meta name="twitter:description" content="Explore global economic uncertainty with I3E's transparent and up-to-date index.">
+  <meta name="twitter:image" content="https://wdecisions.github.io/i3e/plots/global_weighted.png">
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "I3E Economic Uncertainty Index",
+    "url": "https://wdecisions.github.io/i3e/",
+    "description": "The I3E Economic Uncertainty Index is an unbiased, daily-updated measure of global and national economic uncertainty, powered by IESE and the International Center for Decision Making.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "IESE Business School",
+      "url": "https://www.iese.edu"
+    }
+  }
+  </script>
   <style>
     body {
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -13,10 +47,10 @@
       display: flex;
     }
     .sidebar {
-      width: 120px; /* Reduced width from 160px to 120px */
+      width: 120px;
       flex-shrink: 0;
       background-color: #f4f4f4;
-      padding: 0px 10px 10px 10px; /* Added extra top padding */
+      padding: 0px 10px 10px 10px;
       height: 100vh;
       overflow-y: auto;
       border-right: 1px solid #ddd;
@@ -40,18 +74,17 @@
     }
     .main {
       flex-grow: 1;
-      max-width: 1700px; /* Extended max-width for more space */
+      max-width: 1700px;
       margin: 0 20px 20px 0;
       padding: 20px;
     }
-    /* Header split into two rows */
     .header {
       background-color: #FF3B30;
       color: white;
       padding: 10px 20px;
-      margin-left: 0.01px;       /* <-- creates gap between banner and sidebar */
+      margin-left: 0.01px;
       box-sizing: border-box;
-      max-width: 1500px;       /* <-- or adjust to your table/content width */
+      max-width: 1500px;
     }
     .header-top {
       display: flex;
@@ -74,21 +107,19 @@
       color: white;
       text-align: center;
       text-decoration: none;
-      margin-right: 30px; /* Increased separation between nav links */
+      margin-right: 30px;
       font-size: 16px;
       line-height: 16px;
     }
     .business {
-      /* Increased font size and line height for better readability */
       font-size: 16px;
       line-height: 20px;
     }
-    /* Content and table layout */
     .content-wrapper {
       display: flex;
       flex-direction: row;
       align-items: flex-start;
-      gap: 80px; /* Increased gap between text and table */
+      gap: 80px;
       margin-top: 20px;
     }
     .content {
@@ -99,7 +130,6 @@
     #table-container {
       min-width: 200px;
     }
-    /* Table styling */
     #table-container table {
       width: 100%;
       border-collapse: collapse;
@@ -114,7 +144,7 @@
       border-bottom: 1px solid #ddd;
       border-left: none;
       border-right: none;
-      padding: 3px 8px; /*  rows and column width */
+      padding: 3px 8px;
       text-align: left;
     }
     #table-container th {
@@ -134,7 +164,6 @@
       line-height: 1.6;
       color: #444;
     }
-
     @media (max-width: 1000px) {
       .content-wrapper {
         flex-direction: column;
@@ -154,8 +183,7 @@
 </head>
 <body>
   <div class="sidebar">
-    <img src="favicon_XL.png" alt="I3E XL logo"
-         style="display:block; margin:0 auto 18px auto; width:100%; height:auto; max-width:120px;">
+    <img src="favicon_XL.png" alt="I3E Economic Uncertainty Index logo" style="display:block; margin:0 auto 18px auto; width:100%; height:auto; max-width:120px;">
     <h2>Countries</h2>
     <a href="plots/global.png">World</a>
     <a href="plots/australia.png">Australia</a>
@@ -203,21 +231,41 @@
     <!-- Content and table container side by side -->
     <div class="content-wrapper">
       <div class="content" id="content">
-        <h1>What is the I3E?</h1>
-        <p>The IESE Economic Uncertainty Index (I3E) is an indicator of economic uncertainty in the largest world economies.
-           The index is computed daily, using the variation rates of 4 variables in each country:</p>
+        <h1>I3E Economic Uncertainty Index</h1>
+        <p>
+          The <strong>I3E Economic Uncertainty Index</strong> is a leading daily indicator of economic uncertainty across major world economies. Developed by IESE and the International Center for Decision Making, the I3E Index combines stock market volatility, bond yields, exchange rates, and oil prices into a transparent and objective measure.
+        </p>
+        <p>
+          Researchers, policymakers, and businesses use the I3E Index to track changes in economic risk and uncertainty worldwide. Explore global trends, download open data, and compare uncertainty across countries.
+        </p>
+        <h2>Why measure economic uncertainty?</h2>
+        <p>
+          Economic uncertainty impacts investment, employment, and policymaking worldwide. The I3E Economic Uncertainty Index offers a quantifiable and bias-free benchmark for comparing uncertainty levels across nations, providing invaluable insight for research and decision-making.
+        </p>
+        <h2>How is the I3E Economic Uncertainty Index calculated?</h2>
+        <p>
+          The index is computed daily, using the variation rates of four key variables in each country:
+        </p>
         <ul>
           <li>Domestic Stock Index</li>
           <li>Domestic 10-year government bond yields</li>
           <li>Domestic exchange rate</li>
           <li>International Brent crude oil prices</li>
         </ul>
-        <p>The index has an average value of 100. Although it can vary across any range, in practice it fluctuates between 0 and 200.
-           Values below 100 indicate uncertainty lower than the average of previous decades. Values above 100 indicate greater uncertainty.</p>
-        <p>The I3E provides a quantifiable and bias-free measure of economic uncertainty that may be used by researchers and decision-makers worldwide.</p>
-        <br>
+        <p>
+          The index has an average value of 100. Although it can vary across any range, in practice it fluctuates between 0 and 200.
+          Values below 100 indicate uncertainty lower than the average of previous decades. Values above 100 indicate greater uncertainty.
+        </p>
+        <p>
+          The I3E provides a quantifiable and bias-free measure of economic uncertainty that may be used by researchers and decision-makers worldwide.
+        </p>
         <h2 style="text-align: center;">I3E Global (Weighted) Uncertainty Index</h2>
-        <img src="plots/global_weighted.png" alt="I3E Global Weighted Index Plot" style="max-width: 100%; height: auto; margin-top: 10px;">
+        <img src="plots/global_weighted.png" alt="I3E Global Weighted Uncertainty Index plot" style="max-width: 100%; height: auto; margin-top: 10px;">
+        <p>
+          <strong>Learn more:</strong>
+          <a href="I3E.pdf" target="_blank">I3E Technical Note</a> |
+          <a href="I3E.pdf" target="_blank">Comparison I3E, WUI, EPU, and WIX</a>
+        </p>
       </div>
       
       <!-- Table container shown only on the Home view -->
@@ -227,45 +275,40 @@
 
   <script>
     // Set global variable to yesterday's date
-    var time = ""; // initialize empty time
+    var time = "";
 
     fetch('i3e_countries.txt')
       .then(response => response.text())
       .then(text => {
         let lines = text.trim().split('\n');
-        if (lines.length < 2) return;  // Need at least two rows (header + 1 row of data)
+        if (lines.length < 2) return;
         let lastLine = lines[lines.length - 1];
-        let firstCell = lastLine.split('\t')[0].trim(); // Get the first column (date)
-        time = firstCell; // Assign it to the global time variable
-        loadCountryTable(); // Now that time is ready, load the table
+        let firstCell = lastLine.split('\t')[0].trim();
+        time = firstCell;
+        loadCountryTable();
       })
       .catch(error => console.error('Error loading time from country data:', error));
 
-
-    // Store the original content (Home view) including table container
     var initialContent = document.getElementById('content').innerHTML;
-    // Ensure table container is visible on Home
     document.getElementById('table-container').style.display = 'block';
     
-    // Attach click event listeners to the nav links.
     document.querySelectorAll('.nav a').forEach(function(link) {
       link.addEventListener('click', function(event) {
         event.preventDefault();
         var contentDiv = document.getElementById('content');
         var tableDiv = document.getElementById('table-container');
         var linkText = this.textContent.trim();
-  
+
         if (linkText === 'Home') {
-          // Reset to the original Home view.
           contentDiv.innerHTML = initialContent;
           tableDiv.style.display = 'block';
           loadCountryTable();
         } else if (linkText === 'Global Indices') {
           contentDiv.innerHTML = `
             <h2 style="text-align: left;">I3E Global Uncertainty Index</h2>
-            <img src="plots/global.png" alt="I3E Global Index Plot" style="max-width: 100%; height: auto; margin-top: 10px;">
+            <img src="plots/global.png" alt="I3E Global Uncertainty Index plot" style="max-width: 100%; height: auto; margin-top: 10px;">
             <h2 style="text-align: left;">I3E Global Uncertainty Index (Weighted)</h2>
-            <img src="plots/global_weighted.png" alt="I3E Global Weighted Index Plot" style="max-width: 100%; height: auto; margin-top: 10px;">
+            <img src="plots/global_weighted.png" alt="I3E Global Weighted Uncertainty Index plot" style="max-width: 100%; height: auto; margin-top: 10px;">
           `;
           tableDiv.style.display = 'none';
         } else if (linkText === 'Data') {
@@ -307,33 +350,28 @@
         }
       });
     });
-    
-    // Function to capitalize and prettify country names
+
     function formatCountryName(name) {
       return name.replace(/_/g, ' ')
                  .replace(/\b\w/g, c => c.toUpperCase());
     }
 
-    // Function to load the i3e_countries.txt file and build the table by blocks and with separators.
     function loadCountryTable() {
       fetch('i3e_countries.txt')
         .then(response => response.text())
         .then(text => {
           let lines = text.trim().split('\n');
-          if (lines.length < 3) return;  // Need at least header, second last, and last rows.
+          if (lines.length < 3) return;
 
-          // Parse header line
           let headerParts = lines[0].split('\t');
-          if (headerParts[0].trim() === '') headerParts.shift();  // Remove placeholder for date column
+          if (headerParts[0].trim() === '') headerParts.shift();
 
-          // Parse all data lines (without date column)
           let dataRows = lines.slice(1).map(row => row.split('\t').slice(1));
           let dates = lines.slice(1).map(row => row.split('\t')[0]);
           let lastIdx = dataRows.length - 1;
           let idx30 = dataRows.length - 31;
           let idx365 = dataRows.length - 366;
 
-          // --- Group and block definitions
           const countryBlocks = [
             ["united_states", "canada"],
             ["austria", "belgium", "france", "germany", "greece", "italy", "netherlands", "spain", "poland", "united_kingdom"],
@@ -343,7 +381,6 @@
           ];
           const globalBlock = ["global", "global_weighted"];
 
-          // Map country code (header) to index
           let countryIndexMap = {};
           headerParts.forEach((name, idx) => {
             countryIndexMap[name.trim().toLowerCase()] = idx;
@@ -368,7 +405,6 @@
               let numVal30 = parseFloat(val30);
               let numVal365 = parseFloat(val365);
 
-              // Δ1d
               let diff1d = "";
               if (!isNaN(numValue) && !isNaN(numPrevValue)) {
                 let diff1dValue = numValue - numPrevValue;
@@ -377,7 +413,6 @@
                   : `<span style="color:green;">${diff1dValue.toFixed(1)}</span>`;
               }
 
-              // m/m (Δ30d)
               let diff30d = "";
               if (!isNaN(numValue) && !isNaN(numVal30)) {
                 let diff30dValue = numValue - numVal30;
@@ -386,7 +421,6 @@
                   : `<span style="color:green;">${diff30dValue.toFixed(1)}</span>`;
               }
 
-              // Δ365d
               let diff365d = "";
               if (!isNaN(numValue) && !isNaN(numVal365)) {
                 let diff365dValue = numValue - numVal365;
@@ -403,7 +437,6 @@
                 <td>${diff365d}</td>
               </tr>`;
             });
-            // Add red separator after each block except last
             tableHTML += `<tr>
               <td colspan="5" style="border: none; padding: 0;">
                 <hr style="border: 0; border-top: 2px solid #bbb; margin: 8px 0;">
@@ -411,7 +444,6 @@
             </tr>`;
           });
 
-          // Now add Global and Global Weighted at the bottom (after final red line)
           globalBlock.forEach(code => {
             let i = countryIndexMap[code];
             if (i === undefined) return;
@@ -462,8 +494,6 @@
         })
         .catch(error => console.error('Error loading country data:', error));
     }
-    // Load table will be called after fetching time, no need to call here
-
   </script>
 </body>
 </html>
