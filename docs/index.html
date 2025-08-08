@@ -255,91 +255,9 @@
           The index has an average value of 100. Although it can vary across any range, in practice it fluctuates between 0 and 200.
           Values below 100 indicate uncertainty lower than the average of previous decades. Values above 100 indicate greater uncertainty.
         </p>
-                  <!-- Dynamic Plotly Chart for "Global" -->
-        <div id="plot-global" style="width: 120%; height: 60vw; max-height: 600px; margin: 40px auto;"></div>
-        
-        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-        <script>
-        fetch('i3e_countries.txt')
-          .then(res => res.text())
-          .then(data => {
-            const lines = data.trim().split('\n');
-            const header = lines[0].split('\t');
-            const rows = lines.slice(1).map(line => line.split('\t'));
-        
-            const dates = rows.map(r => r[0]);
-            const globalIndex = header.indexOf("global");
-            const values = rows.map(r => parseFloat(r[globalIndex]));
-        
-            if (globalIndex === -1 || values.some(v => isNaN(v))) {
-              document.getElementById("plot-global").innerHTML = "Global column missing or invalid data.";
-              return;
-            }
-        
-            const startYear = new Date(dates[0]).getFullYear();
-            const endYear = new Date(dates[dates.length - 1]).getFullYear();
-            const tickvals = [];
-            for (let y = startYear; y <= endYear; y++) {
-              tickvals.push(`${y}-01-01`);
-            }
-        
-            const shapes = tickvals.map(date => ({
-              type: 'line',
-              xref: 'x',
-              yref: 'paper',
-              x0: date,
-              x1: date,
-              y0: 0,
-              y1: 1,
-              line: {
-                color: 'rgba(80, 80, 80, 0.3)',
-                width: 1,
-                dash: 'dot'
-              }
-            }));
-        
-            Plotly.newPlot('plot-global', [{
-              x: dates,
-              y: values,
-              type: 'scatter',
-              mode: 'lines',
-              fill: 'tozeroy',
-              fillcolor: 'rgba(255, 59, 48, 0.04)',
-              line: { color: '#FF3B30', width: 2 },
-              hovertemplate: '%{x}<br>Value: %{y}<extra></extra>'
-            }], {
-              margin: { t: 30, b: 40 },
-              yaxis: { range: [0, 250], title: 'Index Value' },
-              xaxis: {
-                type: 'date',
-                tickangle: -90,
-                tickformat: '%Y',
-                tickvals: tickvals,
-                showgrid: false,
-                ticks: 'outside',
-                ticklen: 4,
-                tickcolor: '#999',
-                rangeselector: {
-                  buttons: [
-                    { count: 1, label: '1M', step: 'month', stepmode: 'backward' },
-                    { count: 12, label: '1Y', step: 'month', stepmode: 'backward' },
-                    { count: 60, label: '5Y', step: 'month', stepmode: 'backward' },
-                    { count: 120, label: '10Y', step: 'month', stepmode: 'backward' },
-                    { step: 'all', label: 'MAX' }
-                  ]
-                }
-              },
-              shapes: shapes,
-              hovermode: 'x unified',
-              plot_bgcolor: 'white',
-              title: 'I3E ECONOMIC UNCERTAINTY INDEX (GLOBAL)'
-            });
-          })
-          .catch(err => {
-            document.getElementById("plot-global").innerHTML = "Error loading or parsing data.";
-            console.error(err);
-          });
-        </script>
+        <h2 style="text-align: center;">I3E Global (Weighted) Uncertainty Index</h2>
+        <img src="plots/global_weighted.png" alt="I3E Global Weighted Uncertainty Index plot" style="max-width: 100%; height: auto; margin-top: 10px;">
+        <p>
           <strong>Learn more:</strong>
           <a href="I3E.pdf" target="_blank">I3E Technical Note</a> |
           <a href="I3E_and_alternatives.pdf" target="_blank">Comparison I3E, WUI, EPU, and WIX</a>
@@ -367,7 +285,7 @@
       })
       .catch(error => console.error('Error loading time from country data:', error));
 
-    var initialContent = document.getElementById('content').innerHTML;
+    var initialContent = null;
     document.getElementById('table-container').style.display = 'block';
     
     document.querySelectorAll('.nav a').forEach(function(link) {
@@ -378,6 +296,7 @@
         var linkText = this.textContent.trim();
 
         if (linkText === 'Home') {
+          if (!initialContent) initialContent = document.getElementById('content').innerHTML;
           contentDiv.innerHTML = initialContent;
           tableDiv.style.display = 'block';
           loadCountryTable();
