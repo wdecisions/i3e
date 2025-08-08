@@ -301,16 +301,11 @@
           loadCountryTable();
         } else if (linkText === 'Global Indices') {
           contentDiv.innerHTML = `
-          contentDiv.innerHTML = `
-            <div id="plots">
-</div>
-
+            <h2 style="text-align: left;">I3E Global Uncertainty Index</h2>
+            <img src="plots/global.png" alt="I3E Global Uncertainty Index plot" style="max-width: 100%; height: auto; margin-top: 10px;">
+            <h2 style="text-align: left;">I3E Global Uncertainty Index (Weighted)</h2>
+            <img src="plots/global_weighted.png" alt="I3E Global Weighted Uncertainty Index plot" style="max-width: 100%; height: auto; margin-top: 10px;">
           `;
-          const script = document.createElement('script');
-          script.type = 'text/javascript';
-          script.text = `None`;
-          contentDiv.appendChild(script);
-    `;
           tableDiv.style.display = 'none';
         } else if (linkText === 'Data') {
           contentDiv.innerHTML = `
