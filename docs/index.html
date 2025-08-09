@@ -198,29 +198,28 @@
   <div class="sidebar">
     <img src="favicon_XL.png" alt="I3E Economic Uncertainty Index logo" style="display:block; margin:0 auto 18px auto; width:100%; height:auto; max-width:120px;">
     <h2>Countries</h2>
-    <a href="#" id="link-world">World</a>
-    <a href="plots/australia.png">Australia</a>
-    <a href="plots/austria.png">Austria</a>
-    <a href="plots/belgium.png">Belgium</a>
-    <a href="plots/brazil.png">Brazil</a>
-    <a href="plots/canada.png">Canada</a>
-    <a href="plots/china.png">China</a>
-    <a href="plots/egypt.png">Egypt</a>
-    <a href="plots/france.png">France</a>
-    <a href="plots/germany.png">Germany</a>
-    <a href="plots/greece.png">Greece</a>
-    <a href="plots/israel.png">Israel</a>
-    <a href="plots/italy.png">Italy</a>
-    <a href="plots/japan.png">Japan</a>
-    <a href="plots/mexico.png">Mexico</a>
-    <a href="plots/netherlands.png">Netherlands</a>
-    <a href="plots/poland.png">Poland</a>
-    <a href="plots/south_africa.png">South Africa</a>
-    <a href="plots/south_korea.png">South Korea</a>
-    <a href="plots/spain.png">Spain</a>
-    <a href="plots/turkey.png">Turkey</a>
-    <a href="plots/united_kingdom.png">United Kingdom</a>
-    <a href="plots/united_states.png">United States</a>
+    <a href="#" data-country="australia">Australia</a>
+    <a href="#" data-country="austria">Austria</a>
+    <a href="#" data-country="belgium">Belgium</a>
+    <a href="#" data-country="brazil">Brazil</a>
+    <a href="#" data-country="canada">Canada</a>
+    <a href="#" data-country="china">China</a>
+    <a href="#" data-country="egypt">Egypt</a>
+    <a href="#" data-country="france">France</a>
+    <a href="#" data-country="germany">Germany</a>
+    <a href="#" data-country="greece">Greece</a>
+    <a href="#" data-country="israel">Israel</a>
+    <a href="#" data-country="italy">Italy</a>
+    <a href="#" data-country="japan">Japan</a>
+    <a href="#" data-country="mexico">Mexico</a>
+    <a href="#" data-country="netherlands">Netherlands</a>
+    <a href="#" data-country="poland">Poland</a>
+    <a href="#" data-country="south_africa">South Africa</a>
+    <a href="#" data-country="south_korea">South Korea</a>
+    <a href="#" data-country="spain">Spain</a>
+    <a href="#" data-country="turkey">Turkey</a>
+    <a href="#" data-country="united_kingdom">United Kingdom</a>
+    <a href="#" data-country="united_states">United States</a>
   </div>
 
   <div class="main">
@@ -280,6 +279,28 @@
     </div>
     <!-- 🆕 Global chart moved here -->
     <div id="chart-global" class="plot-container"></div>
+    <div id="chart-australia" class="plot-container" style="display:none;"></div>
+    <div id="chart-austria" class="plot-container" style="display:none;"></div>
+    <div id="chart-belgium" class="plot-container" style="display:none;"></div>
+    <div id="chart-brazil" class="plot-container" style="display:none;"></div>
+    <div id="chart-canada" class="plot-container" style="display:none;"></div>
+    <div id="chart-china" class="plot-container" style="display:none;"></div>
+    <div id="chart-egypt" class="plot-container" style="display:none;"></div>
+    <div id="chart-france" class="plot-container" style="display:none;"></div>
+    <div id="chart-germany" class="plot-container" style="display:none;"></div>
+    <div id="chart-greece" class="plot-container" style="display:none;"></div>
+    <div id="chart-israel" class="plot-container" style="display:none;"></div>
+    <div id="chart-italy" class="plot-container" style="display:none;"></div>
+    <div id="chart-japan" class="plot-container" style="display:none;"></div>
+    <div id="chart-mexico" class="plot-container" style="display:none;"></div>
+    <div id="chart-netherlands" class="plot-container" style="display:none;"></div>
+    <div id="chart-poland" class="plot-container" style="display:none;"></div>
+    <div id="chart-south_africa" class="plot-container" style="display:none;"></div>
+    <div id="chart-south_korea" class="plot-container" style="display:none;"></div>
+    <div id="chart-spain" class="plot-container" style="display:none;"></div>
+    <div id="chart-turkey" class="plot-container" style="display:none;"></div>
+    <div id="chart-united_kingdom" class="plot-container" style="display:none;"></div>
+    <div id="chart-united_states" class="plot-container" style="display:none;"></div>
   </div>
 
   <script>
@@ -505,7 +526,6 @@
   </script>
 
     <!-- All other content -->
-
   <script>
     const columns = [
       "australia", "austria", "belgium", "brazil", "canada", "china", "egypt", "france", "germany", "greece",
@@ -514,7 +534,28 @@
     ];
 
     document.addEventListener("DOMContentLoaded", () => {
-      columns.forEach(col => renderChart(`chart-${col}`, col));
+      // nothing needed here unless you want to pre-render "global"
+    });
+  </script>
+
+  <script>
+    document.querySelectorAll('.sidebar a[data-country]').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const country = this.getAttribute('data-country');
+        const containerId = `chart-${country}`;
+        
+        // Hide all charts
+        document.querySelectorAll('.plot-container').forEach(div => div.style.display = 'none');
+  
+        // Show this one
+        const chartDiv = document.getElementById(containerId);
+        if (chartDiv) {
+          chartDiv.style.display = 'block';
+          chartDiv.scrollIntoView({ behavior: 'smooth' });
+          renderChart(containerId, country);
+        }
+      });
     });
   </script>
   
