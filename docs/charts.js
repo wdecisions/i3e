@@ -71,6 +71,20 @@ function renderChart(containerId, columnKey) {
     const deltaColor = delta > 0 ? "red" : "green";
     const latestDate = dates[dates.length - 1];
     const shapes = generateYearLines(startYear, endYear);
+    // 🆕 Add thick horizontal line at y = 100
+    shapes.push({
+      type: 'line',
+      xref: 'paper',
+      yref: 'y',
+      x0: 0,
+      x1: 1,
+      y0: 100,
+      y1: 100,
+      line: {
+        color: '#555',
+        width: 3
+      }
+    });
     const plotTitle = formatTitle(columnKey);
 
     const chartDiv = document.getElementById(containerId);
