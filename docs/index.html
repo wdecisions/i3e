@@ -346,6 +346,7 @@
             <p><a href="i3e_countries.txt" target="_blank">DATA</a> - Download I3E country data (txt). Updated daily (${time}).</p>
           `;
           tableDiv.style.display = 'none';
+          document.querySelectorAll('.plot-container').forEach(div => div.style.display = 'none');
         } else if (linkText === 'Research') {
           contentDiv.innerHTML = `
             <h2>Research Papers</h2>
