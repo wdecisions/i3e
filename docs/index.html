@@ -300,10 +300,6 @@
 
         if (linkText === 'Home') {
           location.reload(); // ⬅️ This forces a full page refresh
-          contentDiv.innerHTML = initialContent;
-          renderChart("chart-global", "global");
-          tableDiv.style.display = 'block';
-          loadCountryTable();
         } else if (linkText === 'Global Indices') {
           contentDiv.innerHTML = `
             <h2 style="text-align: left;">I3E Global Uncertainty Index</h2>
