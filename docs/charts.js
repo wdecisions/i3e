@@ -68,7 +68,7 @@ function renderChart(containerId, columnKey) {
     const previous = values[values.length - 2];
     const delta = latest - previous;
     const deltaStr = (delta > 0 ? "+" : "") + delta.toFixed(2);
-    const deltaClass = delta > 0 ? "positive" : "negative";
+    const deltaColor = delta > 0 ? "red" : "green";
     const latestDate = dates[dates.length - 1];
     const shapes = generateYearLines(startYear, endYear);
     const plotTitle = formatTitle(columnKey);
@@ -77,11 +77,11 @@ function renderChart(containerId, columnKey) {
     if (!chartDiv) return;
 
     chartDiv.innerHTML = `
-      <div class="plot-title">I3E ECONOMIC UNCERTAINTY INDEX (${plotTitle})</div>
-      <div class="plot-subtitle">
+      <div class="plot-title" style="text-align:center; font-size:18px;">I3E ECONOMIC UNCERTAINTY INDEX (${plotTitle})</div>
+      <div class="plot-subtitle" style="text-align:center; font-size:16px;">
         <span class="label">${latestDate}:</span>
         <span class="value">${latest.toFixed(2)}</span>
-        <span class="change ${deltaClass}">(${deltaStr})</span>
+        <span class="change" style="color:${deltaColor};">(${deltaStr})</span>
       </div>
       <div id="${containerId}-plot" style="width: 100%; height: 60vw; max-height: 600px;"></div>
     `;
@@ -94,7 +94,7 @@ function renderChart(containerId, columnKey) {
       fill: 'tozeroy',
       fillcolor: 'rgba(255, 59, 48, 0.04)',
       line: { color: '#FF3B30', width: 2 },
-      hovertemplate: '%{x}<br>Value: %{y}<extra></extra>',
+      hovertemplate: '%{x|%Y-%m-%d}<br>Value: %{y}<extra></extra>',
       name: "Index"
     }], {
       margin: { t: 30, b: 40 },
