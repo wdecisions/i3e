@@ -300,6 +300,7 @@
 
         if (linkText === 'Home') {
           contentDiv.innerHTML = initialContent;
+          renderChart("chart-global");
           tableDiv.style.display = 'block';
           loadCountryTable();
         } else if (linkText === 'Global Indices') {
