@@ -397,7 +397,7 @@
           tableHTML += '<tr><th>Country</th><th>I3E</th><th>Δ1D</th><th>Δ1M</th><th>Δ1Y</th></tr>';
 
           countryBlocks.forEach((block, blockIdx) => {
-            block.forEach(code => {
+            block.forEach((code, countryIdx) => {
               let i = countryIndexMap[code];
               if (i === undefined) return;
 
@@ -436,19 +436,20 @@
                   : `<span style="color:green;">${diff365dValue.toFixed(1)}</span>`;
               }
 
-              tableHTML += `<tr>
+              const borderStyle = (countryIdx === block.length - 1)
+                ? 'border-bottom: 2px solid #bbb;'
+                : '';
+              
+              tableHTML += `<tr style="${borderStyle}">
                 <td>${countryName}</td>
                 <td>${value}</td>
                 <td>${diff1d}</td>
                 <td>${diff30d}</td>
                 <td>${diff365d}</td>
               </tr>`;
+  
             });
-            tableHTML += `<tr>
-              <td colspan="5" style="border: none; padding: 0;">
-                <hr style="border: 0; border-top: 2px solid #bbb; margin: 8px 0;">
-              </td>
-            </tr>`;
+
           });
 
           globalBlock.forEach(code => {
