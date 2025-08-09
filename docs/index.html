@@ -354,6 +354,7 @@
             <p><a href="I3E_and_alternatives.pdf" target="_blank">Working paper</a> - Comparison I3E, WUI, EPU and WIX.</p>
           `;
           tableDiv.style.display = 'none';
+          document.querySelectorAll('.plot-container').forEach(div => div.style.display = 'none');
         } else if (linkText === 'Contact') {
           contentDiv.innerHTML = `
             <p>
@@ -373,6 +374,7 @@
             </p>
           `;
           tableDiv.style.display = 'none';
+          document.querySelectorAll('.plot-container').forEach(div => div.style.display = 'none');
         } else {
           contentDiv.innerHTML = "";
           tableDiv.style.display = 'none';
