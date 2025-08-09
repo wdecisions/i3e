@@ -366,8 +366,8 @@
           let dataRows = lines.slice(1).map(row => row.split('\t').slice(1));
           let dates = lines.slice(1).map(row => row.split('\t')[0]);
           let lastIdx = dataRows.length - 1;
-          let idx30 = dataRows.length - 31;
-          let idx365 = dataRows.length - 366;
+          let idx30 = dataRows.length - 22;
+          let idx365 = dataRows.length - 261;
 
           const countryBlocks = [
             ["united_states", "canada"],
