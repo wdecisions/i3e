@@ -116,7 +116,14 @@ function renderChart(containerId, columnKey) {
       },
       shapes: shapes,
       hovermode: "x unified",
-      plot_bgcolor: "white"
+      plot_bgcolor: "white",
+      dragmode: false
+    }, {
+      displayModeBar: false,
+      scrollZoom: false,
+      doubleClick: false,
+      staticPlot: false,
+      responsive: true
     });
   });
 }
