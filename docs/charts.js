@@ -36,9 +36,12 @@ function loadI3EData(callback) {
     .then(res => res.text())
     .then(text => {
       const lines = text.trim().split('\n');
-      const headers = lines[0].split('\t');
-      const rows = lines.slice(1).map(row => row.split('\t'));
+      const rawHeader = lines[0].split('\t');
+      const headers = ["Date", ...rawHeader];
+
+      const rows = lines.slice(1).map(line => line.split('\t'));
       const dates = rows.map(r => r[0]);
+
       const startYear = new Date(dates[0]).getFullYear();
       const endYear = new Date(dates[dates.length - 1]).getFullYear();
 
