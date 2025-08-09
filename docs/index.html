@@ -436,17 +436,17 @@
                   : `<span style="color:green;">${diff365dValue.toFixed(1)}</span>`;
               }
 
-              const borderStyle = (countryIdx === block.length - 1)
-                ? 'border-bottom: 2px solid #bbb;'
-                : '';
+              const isLastInBlock = (countryIdx === block.length - 1);
+              const tdStyle = isLastInBlock ? ' style="border-bottom: 2px solid #bbb;"' : '';
               
-              tableHTML += `<tr style="${borderStyle}">
-                <td>${countryName}</td>
-                <td>${value}</td>
-                <td>${diff1d}</td>
-                <td>${diff30d}</td>
-                <td>${diff365d}</td>
+              tableHTML += `<tr>
+                <td${tdStyle}>${countryName}</td>
+                <td${tdStyle}>${value}</td>
+                <td${tdStyle}>${diff1d}</td>
+                <td${tdStyle}>${diff30d}</td>
+                <td${tdStyle}>${diff365d}</td>
               </tr>`;
+
   
             });
 
