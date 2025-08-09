@@ -518,7 +518,7 @@
             </tr>`;
           });
 
-          let fullHTML = `<div style="font-size:14px; margin-bottom:10px;">Date: ${time}<br><br>I3E: last. 1D: Δ1-day. 1M: Δ1-month. 1Y: Δ1-year</div><table>${tableHTML}</table>`;
+          let fullHTML = `<div style="font-size:14px; margin-bottom:10px;">Date: ${time}<br>I3E: last. 1D: Δ1-day. 1M: Δ1-month. 1Y: Δ1-year</div><table>${tableHTML}</table>`;
           document.getElementById('table-container').innerHTML = fullHTML;
         })
         .catch(error => console.error('Error loading country data:', error));
