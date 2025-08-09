@@ -299,6 +299,7 @@
         var linkText = this.textContent.trim();
 
         if (linkText === 'Home') {
+          location.reload(); // ⬅️ This forces a full page refresh
           contentDiv.innerHTML = initialContent;
           renderChart("chart-global", "global");
           tableDiv.style.display = 'block';
