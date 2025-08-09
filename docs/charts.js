@@ -82,7 +82,7 @@ function renderChart(containerId, columnKey) {
       y1: 100,
       line: {
         color: '#555',
-        width: 3
+        width: 1
       }
     });
     const plotTitle = formatTitle(columnKey);
