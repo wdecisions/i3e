@@ -260,7 +260,6 @@
           Values below 100 indicate uncertainty lower than the average of previous decades. Values above 100 indicate greater uncertainty.
         </p>
         <div id="chart-global" class="plot-container"></div>
-        <script>renderChart("chart-global", "global");</script>
         <p>
           <strong>Learn more:</strong>
           <a href="I3E.pdf" target="_blank">I3E Technical Note</a> |
@@ -495,5 +494,20 @@
         .catch(error => console.error('Error loading country data:', error));
     }
   </script>
+
+    <!-- All other content -->
+
+  <script>
+    const columns = [
+      "australia", "austria", "belgium", "brazil", "canada", "china", "egypt", "france", "germany", "greece",
+      "israel", "italy", "japan", "mexico", "netherlands", "poland", "south_africa", "south_korea",
+      "spain", "turkey", "united_kingdom", "united_states", "global", "global_weighted"
+    ];
+
+    document.addEventListener("DOMContentLoaded", () => {
+      columns.forEach(col => renderChart(`chart-${col}`, col));
+    });
+  </script>
+  
 </body>
 </html>
