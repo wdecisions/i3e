@@ -32,7 +32,7 @@
     "@type": "WebSite",
     "name": "I3E Economic Uncertainty Index",
     "url": "https://wdecisions.github.io/i3e/",
-    "logo": "https://wdecisions.github.io/i3e/favicon.png"
+    "logo": "https://wdecisions.github.io/i3e/favicon.png",
     "description": "The I3E Economic Uncertainty Index is an unbiased, daily-updated measure of global and national economic uncertainty, powered by IESE and the International Center for Decision Making.",
     "publisher": {
       "@type": "Organization",
@@ -341,9 +341,9 @@
           tableDiv.style.display = 'none';
         } else if (linkText === 'Data') {
           contentDiv.innerHTML = `
-            <p><a href="i3e_global.txt" target="_blank">DATA</a> - Download I3E global data (txt). Updated daily (${time}).</p>
-            <p><a href="i3e_global_weighted.txt" target="_blank">DATA</a> - Download I3E global weighted data (txt). Updated daily (${time}).</p>
-            <p><a href="i3e_countries.txt" target="_blank">DATA</a> - Download I3E country data (txt). Updated daily (${time}).</p>
+            <p><a href="i3e_global.txt" target="_blank">DATA</a> - Download I3E global data (txt). Since 1990-01-01. Updated daily (${time}).</p>
+            <p><a href="i3e_global_weighted.txt" target="_blank">DATA</a> - Download I3E global weighted data (txt). Since 1990-01-01. Updated daily (${time}).</p>
+            <p><a href="i3e_countries.txt" target="_blank">DATA</a> - Download I3E country data (txt). Since 1990-01-01. Updated daily (${time}).</p>
           `;
           tableDiv.style.display = 'none';
           document.querySelectorAll('.plot-container').forEach(div => div.style.display = 'none');
