@@ -48,6 +48,23 @@
 
   <!-- Load Plotly and Custom Charts -->
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <!-- 🔧 Shim: force responsive plots + immediate resize after newPlot -->
+  <script>
+    (function () {
+      if (!window.Plotly) return;
+      const _newPlot = Plotly.newPlot;
+      Plotly.newPlot = function (root, data, layout, config) {
+        const cfg = Object.assign({ responsive: true }, config || {});
+        const lay = Object.assign({ autosize: true }, layout || {});
+        return _newPlot(root, data, lay, cfg).then(function (gd) {
+          try { Plotly.Plots.resize(gd); } catch (e) {}
+          return gd;
+        });
+      };
+    })();
+  </script>
+
   <script src="charts.js"></script>
 
   <style>
@@ -190,6 +207,14 @@
       width: 100%;
       max-width: none;
       height: 60vh;
+    }
+
+    /* 🔧 Ensure Plotly's inner nodes expand to container width */
+    .plot-container > .js-plotly-plot,
+    .plot-container .plotly,
+    .plot-container svg {
+      width: 100% !important;
+      max-width: 100% !important;
     }
 
     /* Existing mobile adjustments */
@@ -615,13 +640,26 @@
     });
   </script>
 
-  <!-- ✅ Global resize helper so charts follow viewport changes/rotation -->
+  <!-- ✅ Global resize helpers so charts follow viewport changes/rotation -->
   <script>
-    window.addEventListener('resize', function () {
+    function resizeAllPlots() {
       if (!window.Plotly) return;
-      document.querySelectorAll('.plot-container').forEach(function(el) {
+      document.querySelectorAll('.plot-container').forEach(function (el) {
         try { Plotly.Plots.resize(el); } catch(e) {}
       });
+    }
+
+    // Window resizes
+    window.addEventListener('resize', resizeAllPlots);
+
+    // Orientation changes on mobile
+    window.addEventListener('orientationchange', function () {
+      setTimeout(resizeAllPlots, 150); // small delay so viewport settles
+    });
+
+    // Also resize once after first paint to decouple from table width
+    window.addEventListener('load', function () {
+      setTimeout(resizeAllPlots, 0);
     });
   </script>
 
